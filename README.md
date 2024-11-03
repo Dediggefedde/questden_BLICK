@@ -5,31 +5,31 @@ WIP
 
 ## Feature Overview
 * All features are optional
-* Reading <img align="right" width="300" src="/Screenshots/01_readability.webp" />
+* Reading <img align="right" width="100" src="/Screenshots/01_readability.webp" />
   * Changes font-size, -type and paragraph-formatting
   * Invert-color option
   * Image fullview on mouse hover
-* Reply form <img align="right" width="300" src="/Screenshots/02_replyform.webp" />
+* Reply form <img align="right" width="100" src="/Screenshots/02_replyform.webp" />
   * Preview and autosave
   * Buttons for BBCODE-Formatting
   * Color-Picker with favourites
   * Icon-Picker with search and collections
-* Watched threads <img align="right" width="300" src="/Screenshots/03_watchedThreads.webp" />
+* Watched threads <img align="right" width="100" src="/Screenshots/03_watchedThreads.webp" />
   * New sidebar and tabular display
   * Individual update and notification options
   * Import/export to website
   * Storing last-read position
-* Export <img align="right" width="300" src="/Screenshots/04_exportEpub.webp" />
+* Export <img align="right" width="200" src="/Screenshots/04_exportEpub.webp" />
   * Export threads to epub and cbz format
   * Settings to freely select posts for the output file
   * Automatic conversion of images formats
   * Multiple templates for generated epub files
   * One-click solution: "Save" to download epub/cbz
-* Synchronization <img align="right" width="300" src="/Screenshots/05_syncSite.webp" />
+* Synchronization <img align="right" width="100" src="/Screenshots/05_syncSite.webp" /><img align="right" width="100" src="/Screenshots/06_app.webp" />
   * Synchronize/Backup your settings and watched threads 
   * Export/Import to JSON-file for manual synchronization
   * [Register an account](https://phi.pf-control.de/tgchan/reg.php) to easily "upload"/"download" your settings
-  * App: With an account, you can synchronize your watched threads and reading positions with my android app https://github.com/Dediggefedde/Questden_Blick_Reader <img align="right" width="300" src="/Screenshots/06_app.webp" />
+  * App: With an account, you can synchronize your watched threads and reading positions with my android app https://github.com/Dediggefedde/Questden_Blick_Reader 
 
 ## How to install
 Userscripts are basically little extentions for your browser.\
