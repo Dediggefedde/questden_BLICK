@@ -6,6 +6,7 @@ WIP
 ## Feature Overview
 * All features are optional
 * Reading
+<img align="right" width="150" src="/Screenshots/01_readability.jpg" />
   * Changes font-size, -type and paragraph-formatting
   * Invert-color option
   * Image fullview on mouse hover
