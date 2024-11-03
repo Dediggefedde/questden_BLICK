@@ -661,7 +661,10 @@ interface JSZip {
 				reader.readAsText(file); // Lese die Datei als Text
 			});
 			document.getElementById("BLICK_epub")?.addEventListener("click", () => {
-				this.fexp.showEPUBForm();
+				this.fexp.showExportForm("epub");
+			});
+			document.getElementById("BLICK_cbz")?.addEventListener("click", () => {
+				this.fexp.showExportForm("cbz");
 			});
 		}
 	};
@@ -1823,7 +1826,6 @@ interface JSZip {
 				document.getElementById("BLICK_wbar_formSubtitle")!.style.display = "none";
 				document.getElementById("BLICK_wbar_genSec")!.style.display = "";
 				(<HTMLSpanElement>document.querySelector("#BLICK_wbar_threadSec .BLICK_wbar_secTitl")).innerText = "Default Thread settings";
-
 				(<HTMLInputElement>document.getElementById("BLICK_wbar_autoUpdate"))!.checked = this.sets.data.autoUpdWbar;
 				(<HTMLSelectElement>document.getElementById("BLICK_wbar_linkTo"))!.selectedIndex = this.wdata.data.numLinkMode;
 			} else {
@@ -2015,7 +2017,6 @@ interface JSZip {
 								let jump = "";
 								if (this.wdata.data.numLinkMode == 0 && thread.lastReadId !== "") jump = "#" + thread.lastReadId;
 								if (this.wdata.data.numLinkMode == 1 && thread.currentReadId !== "") jump = "#" + thread.currentReadId;
-
 								entrNewCnt.innerHTML = String(newCount);
 								entrNewCnt.href = `https://questden.org/kusaba/${thread.section}/res/${id}${add}.html${jump}`;
 							}
@@ -2074,15 +2075,16 @@ interface JSZip {
 	//
 	//
 	enum imgQ { convert = 0, fullview = 1, thumbnail = 2 }
-	enum imgF {webp=0, jpeg=1, unchanged=2}
+	enum imgF { webp = 0, jpeg = 1, unchanged = 2 }
 	interface epubFilter {
 		onlyImg: boolean, //only include posts with img
-		onlyCheck:boolean, //only checked imgs (for fine adjustment).
+		onlyCheck: boolean, //only checked imgs (for fine adjustment).
 		imgQuality: imgQ,
-		imgSets:{maxWidth:number,maxHeight:number,imgFormat:imgF}
+		imgSets: { maxWidth: number, maxHeight: number, imgFormat: imgF }
 		include: string, //string of author name/ids including ONLY posts
 		exclude: string, //string of author name/ids excluding posts
-		style: number //0:simplistic, fullwidth img
+		style: number, //0:simplistic, fullwidth img
+		toEpub: boolean //true=epub, false=cbz
 	}
 	//
 	class FileExport {
@@ -2095,8 +2097,10 @@ interface JSZip {
 		constructor() {
 			this.insertHTML();
 			this.insertStyle();
-			this.filter = { onlyImg: true,onlyCheck: true, imgQuality: imgQ.convert, include: "", exclude: "", style: 0,
-				imgSets:{maxWidth:800,maxHeight:800,imgFormat:imgF.webp} };
+			this.filter = {
+				onlyImg: true, onlyCheck: false, imgQuality: imgQ.convert, include: "", exclude: "", style: 0,
+				imgSets: { maxWidth: 800, maxHeight: 800, imgFormat: imgF.webp }, toEpub: true
+			};
 		};
 		private insertHTML() {
 			this.form = document.createElement("div");
@@ -2104,7 +2108,7 @@ interface JSZip {
 			this.form.id = "BLICK_epub_form_overlay";
 			this.form.innerHTML = `
 				<div id="BLICK_epub_form">
-					<h2>Export Forum Thread to EPUB</h2>
+					<h2>Export Thread to EPUB</h2>
 					<label for="BLICK_epub_title">Title:</label>
 					<input type="text" id="BLICK_epub_title" class="BLICK_epub_input" placeholder="Enter title" required="">
 					<label for="BLICK_epub_author">Author:</label>
@@ -2145,18 +2149,18 @@ interface JSZip {
 					<input type="text" id="BLICK_epub_excludeAuthors" class="BLICK_epub_input" placeholder="Authors to exclude">
 					<label for="BLICK_epub_styleSelect">Select Style:</label>
 					<select id="BLICK_epub_styleSelect" class="BLICK_epub_select">
-						<option value="default">Simple, full-width images</option>
+						<option>Simple, full-width images</option>
+						<option>Simple, floating images with min. width</option>
 					</select>
 					<div id="BLICK_epub_stat">0 Posts, 0 Images</div>
 					<div class="BLICK_epub_buttons">
 						<button data-role="export" class="BLICK_epub_button">Export</button>
 						<button data-role="cancel" class="BLICK_epub_button">Cancel</button>
-						<button data-role="select" class="BLICK_epub_button" title='highlights and checks all posts that will go into the epub file'>Select</button>
+						<button data-role="select" class="BLICK_epub_button" title='highlights and checks all posts that will go into the epub file'>Highlight</button>
 					</div>
 				</div>`
 			document.body.appendChild(this.form);
 			this.statDispEl = document.getElementById("BLICK_epub_stat")!;
-
 			this.form.addEventListener("click", (ev) => {
 				if (ev.target === this.form) return this.hideEPUBForm();
 				if (!(ev.target instanceof HTMLButtonElement)) return;
@@ -2170,7 +2174,10 @@ interface JSZip {
 						break;
 					case "export":
 						this.transferSettings();
-						this.exportEpub();
+						if (this.filter.toEpub)
+							this.exportEpub();
+						else
+							this.exportCBZ();
 						break;
 					case "cancel":
 						this.hideEPUBForm();
@@ -2182,12 +2189,12 @@ interface JSZip {
 			this.form.addEventListener("change", (ev) => {
 				this.transferSettings();
 				this.filterEntries(document);
-			},true);
-			document.getElementById("BLICK_epub_imageQuality")?.addEventListener("change",ev=>{
-				let target=ev.target as HTMLSelectElement;
-				let visibl=target.selectedIndex == imgQ.convert;
-				document.getElementById("BLICK_epub_imageSetting")?.style.setProperty("display",visibl?"":"none");
-				(<HTMLLabelElement|null>document.querySelector("label[for='BLICK_epub_imageSetting']"))?.style.setProperty("display",visibl?"":"none");
+			}, true);
+			document.getElementById("BLICK_epub_imageQuality")?.addEventListener("change", ev => {
+				let target = ev.target as HTMLSelectElement;
+				let visibl = target.selectedIndex == imgQ.convert;
+				document.getElementById("BLICK_epub_imageSetting")?.style.setProperty("display", visibl ? "" : "none");
+				(<HTMLLabelElement | null>document.querySelector("label[for='BLICK_epub_imageSetting']"))?.style.setProperty("display", visibl ? "" : "none");
 			});
 			document.getElementById("delform")?.addEventListener("click", (ev) => {
 				let target = ev.target as HTMLInputElement;
@@ -2225,9 +2232,27 @@ interface JSZip {
 					`;
 			document.head.appendChild(sty);
 		}
-		showEPUBForm() {
+		showExportForm(mode = "epub") {
 			if (this.form == null) return;
 			this.form.style.display = "flex";
+			//
+			if (mode == "cbz") {
+				this.form.querySelector("h2")!.innerHTML = "Export Thread to CBZ";
+				(<HTMLDivElement>this.form.querySelector("#BLICK_epub_styleSelect")).style.display = "none";
+				(<HTMLDivElement>this.form.querySelector("label[for='BLICK_epub_styleSelect']")).style.display = "none";
+				(<HTMLDivElement>this.form.querySelector("label[for='BLICK_epub_includeImages']")).style.display = "none";
+				this.filter.toEpub = false;
+			} else if (mode = "epub") {
+				this.form.querySelector("h2")!.innerHTML = "Export Thread to EPUB";
+				(<HTMLDivElement>this.form.querySelector("#BLICK_epub_styleSelect")).style.display = "";
+				(<HTMLDivElement>this.form.querySelector("label[for='BLICK_epub_styleSelect']")).style.display = "";
+				(<HTMLDivElement>this.form.querySelector("label[for='BLICK_epub_includeImages']")).style.display = "";
+				this.filter.toEpub = true;
+			} else {
+				alert("questden_blick2 error: unknown export form mode");
+				throw new Error("questden_blick2 error: unknown export form mode: " + mode);
+			}
+			//	
 			(<HTMLInputElement>document.getElementById("BLICK_epub_includeImages")).checked = this.filter.onlyImg;
 			(<HTMLInputElement>document.getElementById("BLICK_epub_includeChecked")).checked = this.filter.onlyCheck;
 			(<HTMLInputElement>document.getElementById("BLICK_epub_includeAuthors")).value = this.filter.include;
@@ -2237,8 +2262,7 @@ interface JSZip {
 			(<HTMLSelectElement>document.getElementById("BLICK_epub_imageFormat")).selectedIndex = this.filter.imgSets.imgFormat;
 			(<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxW")).value = String(this.filter.imgSets.maxWidth);
 			(<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxH")).value = String(this.filter.imgSets.maxHeight);
-
-
+			//
 			this.title = (<HTMLSpanElement | null>document.querySelector("div.postwidth span.filetitle"))?.innerText ?? "Default";
 			(<HTMLSelectElement>document.getElementById("BLICK_epub_title")).value = this.title;
 			this.author = (<HTMLSpanElement | null>document.querySelector("div.postwidth span.postername"))?.innerText ?? "Bob";
@@ -2253,11 +2277,11 @@ interface JSZip {
 			this.filter.exclude = (<HTMLInputElement>document.getElementById("BLICK_epub_excludeAuthors")).value;
 			this.filter.style = (<HTMLSelectElement>document.getElementById("BLICK_epub_styleSelect")).selectedIndex;
 			this.filter.imgQuality = (<HTMLSelectElement>document.getElementById("BLICK_epub_imageQuality")).selectedIndex;
-
-			this.filter.imgSets.imgFormat=(<HTMLSelectElement>document.getElementById("BLICK_epub_imageFormat")).selectedIndex;
-			this.filter.imgSets.maxWidth =parseInt((<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxW")).value);
-			this.filter.imgSets.maxHeight=parseInt((<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxH")).value);
-
+			//
+			this.filter.imgSets.imgFormat = (<HTMLSelectElement>document.getElementById("BLICK_epub_imageFormat")).selectedIndex;
+			this.filter.imgSets.maxWidth = parseInt((<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxW")).value);
+			this.filter.imgSets.maxHeight = parseInt((<HTMLInputElement>document.getElementById("BLICK_epub_imageMaxH")).value);
+			//
 			this.title = (<HTMLSelectElement>document.getElementById("BLICK_epub_title")).value ?? "Default";
 			this.author = (<HTMLSelectElement>document.getElementById("BLICK_epub_author")).value ?? "Bob";
 		}
@@ -2267,12 +2291,12 @@ interface JSZip {
 			cont.querySelectorAll<HTMLDivElement>("div.postwidth").forEach(el => {
 				el.parentElement!.classList.remove("BLICK_epub_selected");
 				//
-				let authName = (<HTMLSpanElement|null>el.querySelector("span.postername"))?.innerText??"<noname>";
-				let authID = (<HTMLSpanElement|null>el.querySelector("span.uid"))?.innerText.substring(4)??"<noid>";
+				let authName = (<HTMLSpanElement | null>el.querySelector("span.postername"))?.innerText ?? "<noname>";
+				let authID = (<HTMLSpanElement | null>el.querySelector("span.uid"))?.innerText.substring(4) ?? "<noid>";
 				let hasImg = el.querySelector("img.thumb") !== null;
-				let elChecked=(<HTMLInputElement|null>el.closest("input[type='checkbox'][name='post[]']"))?.checked??false;
+				let elChecked = (<HTMLInputElement | null>el.querySelector("input[type='checkbox'][name='post[]']"))?.checked ?? false;
 				//
-				if(this.filter.onlyCheck===true && !elChecked)return
+				if (this.filter.onlyCheck === true && !elChecked) return
 				if (this.filter.onlyImg === true && hasImg === false) return;
 				if (this.filter.include !== "" && (!this.filter.include.includes(authName) && !this.filter.include.includes(authID))) return;
 				if (this.filter.exclude !== "" && (this.filter.exclude.includes(authName) || this.filter.exclude.includes(authID))) return;
@@ -2309,7 +2333,7 @@ interface JSZip {
 		async fetchImages(imgUrls: string[]): Promise<{ name: string, img: Blob }[]> {
 			let imgcnt = 0;
 			const requests = imgUrls.map(async (url) => {
-				try{
+				try {
 					const response = await fetch(url);
 					++imgcnt;
 					if (!response.ok) {
@@ -2318,12 +2342,12 @@ interface JSZip {
 					const blob = await response.blob();
 					this.statDispEl.innerHTML = `Downloading Image: ${imgcnt}/${imgUrls.length}`;
 					const name = url.split("/").pop() || "unknown";
-
+					//
 					let ret = { name, img: blob };
 					if (this.filter.imgQuality === imgQ.convert)
-						ret = await this.processImage(blob, name,this.filter.imgSets.maxWidth,this.filter.imgSets.maxHeight);
+						ret = await this.processImage(blob, name, this.filter.imgSets.maxWidth, this.filter.imgSets.maxHeight);
 					return ret;
-				}catch(ex){
+				} catch (ex) {
 					console.log("error in fetching images!", ex, url);
 					throw ex;
 				}
@@ -2332,35 +2356,28 @@ interface JSZip {
 		}
 		async processImage(blob: Blob, name: string, maxWidth = 800, maxHeight = 800): Promise<{ name: string, img: Blob }> {
 			const img = new Image();
-
 			return new Promise((resolve, reject) => {
 				img.onload = () => {
 					const canvas = document.createElement("canvas");
 					let { width, height } = img;
-
-					// Skalierung bei Überschreiten der max-Auflösung
-					if ((maxWidth>0 && width > maxWidth) || (maxHeight>0 && height > maxHeight)) {
+					if ((maxWidth > 0 && width > maxWidth) || (maxHeight > 0 && height > maxHeight)) {
 						const scaleFactor = Math.min(maxWidth / width, maxHeight / height);
 						width = width * scaleFactor;
 						height = height * scaleFactor;
 					}
-
+					//
 					canvas.width = width;
 					canvas.height = height;
-
 					const ctx = canvas.getContext("2d");
 					if (ctx == null) return;
 					ctx.drawImage(img, 0, 0, width, height);
-
-					const fileType = name.split('.')?.pop()?.toLowerCase()??null;
+					//
+					const fileType = name.split('.')?.pop()?.toLowerCase() ?? null;
 					const formatMap: { [key: string]: string } = { webp: 'image/webp', jpeg: 'image/jpeg', jpg: 'image/jpeg', png: 'image/png', gif: 'image/gif' };
-
-					const origFormat = fileType!==null? formatMap[fileType] : formatMap.jpeg; 
-					let outputFormat=origFormat;
-					if(this.filter.imgSets.imgFormat===imgF.jpeg)outputFormat=formatMap.jpeg;
-					else if(this.filter.imgSets.imgFormat===imgF.webp)outputFormat=formatMap.webp;
-
-					// Konvertiere zu WebP
+					const origFormat = fileType !== null ? formatMap[fileType] : formatMap.jpeg;
+					let outputFormat = origFormat;
+					if (this.filter.imgSets.imgFormat === imgF.jpeg) outputFormat = formatMap.jpeg;
+					else if (this.filter.imgSets.imgFormat === imgF.webp) outputFormat = formatMap.webp;
 					canvas.toBlob((processedBlob) => {
 						if (processedBlob !== null)
 							resolve({ name, img: processedBlob });
@@ -2371,6 +2388,55 @@ interface JSZip {
 				img.onerror = reject;
 				img.src = URL.createObjectURL(blob);
 			});
+		}
+		private exportCBZ() {
+			this.filter.onlyImg = true;
+			this.filterEntries(document);
+			const imgs: Set<string> = new Set();
+			this.entryList.forEach((el, ind, arr) => {
+				this.statDispEl.innerHTML = `Processing Post: ${ind}/${this.entryList.length}%`;
+				let cont = el.parentElement;
+				const imgEl = (<HTMLImageElement | null>cont?.querySelector("img.thumb"));
+				let imgName = "";
+				if (imgEl !== null) {
+					let imgUrl = imgEl.src;
+					if (imgUrl.includes("spoiler.png"))
+						imgUrl = imgEl.closest("a")?.href.replace(".", "s.").replace("src", "thumb") ?? ""; //thumbnail-link from full-link
+					if (this.filter.imgQuality !== imgQ.thumbnail) { //all thumbnail. convert uses fullview as base
+						imgUrl = imgUrl.replace("s.", ".").replace("thumb", "src");//full-link from thumbnail-link 
+					}
+					imgName = imgUrl.split("/").pop() ?? "";
+					if (imgName !== "." && imgName !== "") imgs.add(imgUrl); //exclude spoiler image without image. link ends then wiht "/."
+				}
+			});
+			//
+			const zip = new JSZip();
+			//
+			this.fetchImages([...imgs]).then((imageBlob) => {
+				let imgCnt = 0;
+				imageBlob.forEach(blob => {
+					++imgCnt;
+					zip.file(`${String(imgCnt).padStart(4, '0')}_${blob.name}`, blob.img, { binary: true });
+					this.statDispEl.innerHTML = `Adding Image: ${imgCnt}/${imageBlob.length}`;
+				});
+			}).then(() => {
+				return zip.generateAsync({
+					type: "blob",
+					compression: "DEFLATE"//, 
+					// compressionOptions: { level: 1 }
+				},
+					(metadata) => {
+						this.statDispEl.innerHTML = `Compressing: ${metadata.percent.toFixed(2)}%`;
+					}
+				);
+			}).then(blob => {
+				const link = document.createElement("a");
+				link.href = URL.createObjectURL(blob);
+				link.download = `[${this.author}]_${this.title}.cbz`;
+				link.click();
+				this.statDispEl.innerHTML = `Downloading.`;
+			})
+
 		}
 		private exportEpub() {
 			this.filterEntries(document);
@@ -2384,33 +2450,31 @@ interface JSZip {
 				const id = (<HTMLInputElement | null>cont?.querySelector("input[type='checkbox'][name='post[]']"))?.value ?? "";
 				const date = cont?.querySelector("span.postername")?.nextSibling?.textContent?.trim() ?? "";
 				//
-				// cont?.querySelector("blockquote")?.querySelectorAll<HTMLAnchorElement>("a[href='javascript:void(0)']").forEach(linkref=>{
-					// linkref.href="#"+ linkref.className?.split("|").pop();
-				// })
 				let msg: string = cont?.querySelector("blockquote")?.innerHTML ?? ""; //message body
 				msg = msg.replace(/src="\/kusaba\/.*?\/thumb\//gi, "src=\"images/") //icons/thumbnails
 					.replace(/href="\/kusaba\/.*?\/res\/.*?#/gi, "href=\"#") //references
 					.replace(/onmouseover=".*?"/gi, "") //remove onmouseover
 					.replace(/onmouseout=".*?"/gi, "") //remove onmouseout
-					.replace(/<a .*?>\s*&gt;&gt;(\d+)/gi, "<a data-refid='$1' onmouseenter='hoverPrevEnter(event)' onmouseleave='hoverPrevLeave(event)' href='#$1'>&gt;&gt;$1"); //adjust reflinks
+					.replace(/<a .*?>\s*&gt;&gt;(\d+)/gi, "<a data-refid='$1' onmouseenter='hoverPrevEnter(event)' onmouseleave='hoverPrevLeave(event)' href='#$1'>&gt;&gt;$1"). //adjust reflinks
+					replace('<div style="display:inline-block; width:400px;"></div><br>', ""); //remove leading spacers
 				cont?.querySelector("blockquote")?.querySelectorAll("img").forEach(el => { imgs.add(el.src); }); //download msg images/icons
 				//
 				const imgEl = (<HTMLImageElement | null>cont?.querySelector("img.thumb"));
-				let imgName="";
-				if(imgEl!==null){
-					let imgUrl =imgEl.src;
-					if(imgUrl.includes("spoiler.png"))
-						imgUrl=imgEl.closest("a")?.href.replace(".", "s.").replace("src", "thumb") ??""; //thumbnail-link from full-link
-					if(this.filter.imgQuality!==imgQ.thumbnail){ //all thumbnail. convert uses fullview as base
-						imgUrl=imgUrl.replace("s.", ".").replace("thumb", "src");//full-link from thumbnail-link 
+				let imgName = "";
+				if (imgEl !== null) {
+					let imgUrl = imgEl.src;
+					if (imgUrl.includes("spoiler.png"))
+						imgUrl = imgEl.closest("a")?.href.replace(".", "s.").replace("src", "thumb") ?? ""; //thumbnail-link from full-link
+					if (this.filter.imgQuality !== imgQ.thumbnail) { //all thumbnail. convert uses fullview as base
+						imgUrl = imgUrl.replace("s.", ".").replace("thumb", "src");//full-link from thumbnail-link 
 					}
-					imgName=imgUrl.split("/").pop()??"";
-					if(imgName!=="." && imgName!=="")imgs.add(imgUrl); //exclude spoiler image without image. link ends then wiht "/."
+					imgName = imgUrl.split("/").pop() ?? "";
+					if (imgName !== "." && imgName !== "") imgs.add(imgUrl); //exclude spoiler image without image. link ends then wiht "/."
 				}
 				//
-				let tex = "";
+				let tex = `<div id='${id}' class='post'>`;
 				if (imgName !== "") tex += `<img class='thumb' src='images/${imgName}' />`;
-				tex += `<div id='${id}' class='post'><div class='postHead'>
+				tex += `<div class='postHead'>
 					<span class='post_author'>${author}</span>
 					<span class='post_title'>${title}</span>
 					<span class='post_date'>${date}</span>
@@ -2418,7 +2482,7 @@ interface JSZip {
 				</div><div class='postBody'>${msg}</div></div>`;
 				return tex;
 			}).join("");
-
+			//
 			const zip = new JSZip();
 			zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
 			zip.file("META-INF/container.xml", `
@@ -2446,15 +2510,32 @@ interface JSZip {
 						</spine>
 				</package>
 			`);
-			zip.file("OEBPS/style.css", `
-				div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
-				img.thumb{width:90%;display: block;margin:auto;}
-				span.post_title {color: red;font-weight: bold;}
-				span.post_author {color: green;font-weight: bold;}
-				div.postHead{display:flex;display: flex;justify-content: space-between;margin-bottom:15px;}
-				#hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
-				span.unkfunc{color: #789922;}
-			`);
+			switch (this.filter.style) {
+				default:
+				case 0:
+					zip.file("OEBPS/style.css", `
+						div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
+						img.thumb{width:90%;display: block;margin:auto;}
+						span.post_title {color: red;font-weight: bold;}
+						span.post_author {color: green;font-weight: bold;}
+						div.postHead{display:flex;display: flex;justify-content: space-between;margin-bottom:15px;flex-wrap: wrap;}
+						#hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
+						span.unkfunc{color: #789922;}
+					`);
+					break;
+				case 1:
+					zip.file("OEBPS/style.css", `
+					div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
+					img.thumb{display: block;float:left;width:100%;max-width:300px;margin-right:10px;}
+					div.post::after {content: "";display: table;clear: both;}
+					span.post_title {color: red;font-weight: bold;}
+					span.post_author {color: green;font-weight: bold;}
+					div.postHead{display:flex;justify-content: space-between;margin-bottom:15px;min-width:200px;flex-wrap: wrap;}
+					#hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
+					span.unkfunc{color: #789922;}
+				`);
+					break;
+			}
 			zip.file("OEBPS/content.html", `
 				<?xml version="1.0" encoding="UTF-8"?>
 				<!DOCTYPE html>
@@ -2466,11 +2547,8 @@ interface JSZip {
 								function hoverPrevEnter(e){
 									const hoverContent = document.getElementById('hover-content');
 									hoverContent.style.left = e.pageX + 15 + 'px'; // 15px Offset from the cursor
-									hoverContent.style.top = e.pageY + 15 + 'px';
-
-									const targetId = e.target.dataset.refid;
+									hoverContent.style.top = e.pageY + 15 + 'px';									const targetId = e.target.dataset.refid;
 									const targetElement = document.getElementById(targetId);
-
 									if (targetElement) {
 											hoverContent.innerHTML = targetElement.innerHTML;
 											hoverContent.style.display = 'block';
@@ -2491,7 +2569,6 @@ interface JSZip {
 						</body>
 				</html>
 			`);
-
 			this.fetchImages([...imgs]).then((imageBlob) => {
 				let imgCnt = 0;
 				imageBlob.forEach(blob => {
