@@ -5,27 +5,27 @@ WIP
 
 ## Feature Overview
 * All features are optional
-* Reading <img align="right" width="100" src="/Screenshots/01_readability.webp" />
+* Reading <img align="right" width="100" src="/Screenshots/01_readability.jpg" />
   * Changes font-size, -type and paragraph-formatting
   * Invert-color option
   * Image fullview on mouse hover
-* Reply form <img align="right" width="100" src="/Screenshots/02_replyform.webp" />
+* Reply form <img align="right" width="100" src="/Screenshots/02_replyform.jpg" />
   * Preview and autosave
   * Buttons for BBCODE-Formatting
   * Color-Picker with favourites
   * Icon-Picker with search and collections
-* Watched threads <img align="right" width="100" src="/Screenshots/03_watchedThreads.webp" />
+* Watched threads <img align="right" width="100" src="/Screenshots/03_watchedThreads.jpg" />
   * New sidebar and tabular display
   * Individual update and notification options
   * Import/export to website
   * Storing last-read position
-* Export <img align="right" width="200" src="/Screenshots/04_exportEpub.webp" />
+* Export <img align="right" width="200" src="/Screenshots/04_exportEpub.jpg" />
   * Export threads to epub and cbz format
   * Settings to freely select posts for the output file
   * Automatic conversion of images formats
   * Multiple templates for generated epub files
   * One-click solution: "Save" to download epub/cbz
-* Synchronization <img align="right" width="100" src="/Screenshots/05_syncSite.webp" /><img align="right" width="100" src="/Screenshots/06_app.webp" />
+* Synchronization <img align="right" width="100" src="/Screenshots/05_syncSite.jpg" /><img align="right" width="100" src="/Screenshots/06_app.jpg" />
   * Synchronize/Backup your settings and watched threads 
   * Export/Import to JSON-file for manual synchronization
   * [Register an account](https://phi.pf-control.de/tgchan/reg.php) to easily "upload"/"download" your settings
