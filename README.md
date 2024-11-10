@@ -1,7 +1,7 @@
 # Questden_BLICK2
 Userscript to improve readability of questden.org
 
-A detailed documentation of the features can be found in the [Wiki](./wiki).
+A detailed documentation of the features can be found in the [Wiki](https://github.com/Dediggefedde/questden_BLICK/wiki).
 
 ## Feature Overview
 * All features are optional
