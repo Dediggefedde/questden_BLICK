@@ -11,21 +11,26 @@ interface JSZip {
 }
 // ==UserScript==
 // @name         questden-BLICK2
-// @namespace    https://phi.pf-control.de/tgchan 
-// @version      2024-11-02
+// @namespace    https://phi.pf-control.de/tgchan
+// @version      2024-11-10
 // @description  Improves readability of questden.org
 // @author       dediggefedde
-// @match        *://questden.org/kusaba/*
+// @match *://questden.org/kusaba/draw/*
+// @match *://questden.org/kusaba/meep/*
+// @match *://questden.org/kusaba/moo/*
+// @match *://questden.org/kusaba/quest/*
+// @match *://questden.org/kusaba/questdis/*
+// @match *://questden.org/kusaba/tg/*
+// @match *://questden.org/kusaba/questarch/*
+// @match *://questden.org/kusaba/graveyard/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js
 // @grant        GM.xmlHttpRequest
 // @grant        GM.setValue
 // @grant        GM.getValue
 // @license      MIT; http://opensource.org/licenses/MIT
-// @noframes
 // @sandbox      raw
 // ==/UserScript==
-//
 // 
 /* jshint esnext:true */
 /* eslint curly: 0 */
@@ -144,6 +149,7 @@ interface JSZip {
 	};
 	class Sync {
 		public creds: LoginCredents; //storage for user/pw
+		public access: number = 0;
 		private serverURL = "https://phi.pf-control.de/tgchan/API.php";
 		constructor() {
 			this.creds = new LoginCredents();
@@ -166,17 +172,24 @@ interface JSZip {
 					}),
 					onload: (response) => {
 						if (response.status === 200) {
-							const result = JSON.parse(response.responseText);
-							if (result.token) {
-								this.creds.data.token = result.token;
-								this.creds.data.exp = new Date();
-								this.creds.save();
-								resolve(true);
-							} else {
-								this.creds.data.token = "";
-								this.creds.data.exp = null;
-								this.creds.save();
-								resolve(false);
+							try {
+								const result = JSON.parse(response.responseText);
+								if (result.token!==undefined) {
+									this.creds.data.token = result.token;
+									this.access=(result.access!==undefined)?parseInt(result.access):0;
+									this.creds.data.name=result.name??"undefined";
+									this.creds.data.exp = new Date();
+									this.creds.save();
+									resolve(true);
+								} else {
+									this.creds.data.token = "";
+									this.creds.data.exp = null;
+									this.creds.save();
+									resolve(false);
+								}
+							} catch (ex) {
+								console.log("BLICK login error:", ex, response.responseText);
+								reject(`Error: ${response.status}, ${response.response}`);
 							}
 						} else {
 							this.creds.data.token = "";
@@ -220,12 +233,24 @@ interface JSZip {
 					}, Storage.replacer),
 					onload: (response) => {
 						if (response.status === 200) {
-							resolve();
+							try {
+								let result = JSON.parse(response.responseText);
+								if (result.success === undefined) {
+									reject(`Error: ${response.status}, ${result}`);
+								} else {
+									if(result.access!==undefined)this.access=result.access;
+									resolve()
+								}
+							} catch (ex) {
+								console.log("BLICK upload error ", ex);
+								reject(`Error: ${response.status}, ${response.response}`);
+							}
 						} else {
 							try {
 								const result = JSON.parse(response.responseText);
 								reject(`Error: ${response.status}, ${result.error}`);
 							} catch (ex) {
+								console.log("BLICK upload error ", ex);
 								reject(`Error: ${response.status}, ${response.response}`);
 							}
 						}
@@ -339,7 +364,7 @@ interface JSZip {
 		barStyle = `
 			#BLICK_bar {width:20px;overflow:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s; right:0px;height:30px;background-color:#9ad;z-index:9;opacity:0.5;top:50px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;}
 			#BLICK_bar .BLICK_cont {width:250px;font: 16px/2em georgia, Palatino Linotype, Book Antiqua, Tahoma;padding-left: 20px;visibility:hidden;}
-			#BLICK_bar:hover {width:270px;opacity:1;height:410px;}
+			#BLICK_bar:hover {width:270px;opacity:1;height:420px;}
 			#BLICK_bar:hover .BLICK_cont{visibility:visible;}
 			#BLICK_bar .BLICK_button {background-color: #DDDDFF;border: 1px ridge #CCCCCC;border-radius: 10px 10px 10px 10px;cursor: pointer;display: inline-block;font: 30px/17px georgia;height: 20px;margin: 5px;text-align: center;vertical-align: middle;width: 20px;}
 			#BLICK_bar .BLICK_button:hover {background-color: #aaf;}
@@ -355,7 +380,8 @@ interface JSZip {
 			#BLICK_imgbox .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 			#BLICK_imgbox .imgEl{width:100%;height:auto;display:none;}
 			#BLICK_sync_updownSec{display:none;flex-direction: row;justify-content: space-evenly;}
-			#BLICK_sync_loginHello{color:green;font-weight:bold;}
+			#BLICK_sync_loginHello{color:green;font-weight:bold;white-space:nowrap;overflow: hidden;}
+			#BLICK_sync_loginAccess{padding-left:10px;color:green;font-size: 8pt;height: 10px;line-height: 3px;}
 			#BLICK_fonttype{width:130px;}
 			.BLICK_floatButs{border:none;background:none;cursor:pointer;position:absolute;top:0;width:16px;height:16px;padding:0;}
 			.BLICK_floatButs:hover{filter:brightness(120%);}
@@ -421,6 +447,7 @@ interface JSZip {
 						<a href="https://phi.pf-control.de/tgchan/reg.php" target="_blank">Register Account</a>
 					</div>
 					<div id='BLICK_sync_loginHello'></div>
+					<div id='BLICK_sync_loginAccess'></div>
 					<div id='BLICK_sync_updownSec'>
 						<input type='submit' onclick='return false;' id='BLICK_sync_upload' value='Upload'/>
 						<input type='submit' onclick='return false;' id='BLICK_sync_download' value='Download'/>
@@ -560,7 +587,15 @@ interface JSZip {
 						document.getElementById("BLICK_sync_updownSec")?.style.setProperty("display", "flex");
 						document.getElementById("BLICK_sync_loginSec")?.style.setProperty("display", "none");
 						let loginHello = document.getElementById("BLICK_sync_loginHello");
-						if (loginHello) loginHello.innerHTML = "Hello, " + (<HTMLInputElement>document.getElementById("BLICK_sync_user"))?.value + "!";
+						if (loginHello) loginHello.innerHTML = "Hello, " + this.syncr.creds.data.name + "!";
+						//
+						let loginAccess = document.getElementById("BLICK_sync_loginAccess");
+						if (!loginAccess) return;
+						if (this.syncr.access > 0) {
+							loginAccess.innerHTML = "Last uploaded: " + this.formatDate(this.syncr.access * 1000);
+						} else {
+							loginAccess.innerHTML = "No data uploaded";
+						}
 					} else {
 						alert(`Login failed without reason!`);
 					}
@@ -571,6 +606,7 @@ interface JSZip {
 			});
 			document.getElementById("BLICK_sync_upload")?.addEventListener("click", (ev) => {
 				let loginHello = document.getElementById("BLICK_sync_loginHello");
+				let loginAccess = document.getElementById("BLICK_sync_loginAccess");
 				if (loginHello) loginHello.innerHTML = "Connecting...";
 				Promise.all([
 					this.syncr.upload("sidebar", this.setting),
@@ -578,6 +614,7 @@ interface JSZip {
 					this.syncr.upload("watchbar", this.dom.watchbar?.wdata ?? null)
 				]).then(res => {
 					if (loginHello) loginHello.innerHTML = "Upload successful!";
+					if (loginAccess) loginAccess.innerHTML = "Last uploaded: " + this.formatDate(this.syncr.access*1000);
 					console.log("Upload successful!");
 				}).catch(ex => {
 					if (loginHello) loginHello.innerHTML = "Error.";
@@ -666,6 +703,16 @@ interface JSZip {
 			document.getElementById("BLICK_cbz")?.addEventListener("click", () => {
 				this.fexp.showExportForm("cbz");
 			});
+		}
+		formatDate(uixTS: number = Date.now()): string {
+			const date = new Date(uixTS);
+			const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			const options = {
+				year: 'numeric', month: '2-digit', day: '2-digit',
+				hour: '2-digit', minute: '2-digit', second: '2-digit',
+				timeZone: userTimezone
+			} as Intl.DateTimeFormatOptions;
+			return new Intl.DateTimeFormat('de-DE', options).format(date);
 		}
 	};
 	//
@@ -2150,7 +2197,7 @@ interface JSZip {
 					<label for="BLICK_epub_styleSelect">Select Style:</label>
 					<select id="BLICK_epub_styleSelect" class="BLICK_epub_select">
 						<option>Simple, full-width images</option>
-						<option>Simple, floating images with min. width</option>
+						<option>Simple, floating images with max. width</option>
 					</select>
 					<div id="BLICK_epub_stat">0 Posts, 0 Images</div>
 					<div class="BLICK_epub_buttons">
