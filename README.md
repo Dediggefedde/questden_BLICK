@@ -38,7 +38,7 @@ I recommend [Tampermonkey](https://www.tampermonkey.net/).\
 If you use Google Chrome, you will also need to [enable the extension developer mode](https://www.tampermonkey.net/faq.php?locale=en#Q209).
 
 Select "questden_blick2.user.js" from the list above and view it as "Raw" or
-[Click here to install questden_blick2.user.js](/questden_blick2.user.js).
+[Click here to install questden_blick2.user.js](https://github.com/Dediggefedde/questden_BLICK/raw/refs/heads/main/questden_blick2.user.js).
 
 Confirm the prompt from Tampermonkey that you want to install the script and reload questden.org. Then the script is ready to run and will show a small blue button on the right.
 
