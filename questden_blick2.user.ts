@@ -12,7 +12,7 @@ interface JSZip {
 // ==UserScript==
 // @name         questden-BLICK2
 // @namespace    https://phi.pf-control.de/tgchan
-// @version      2024-11-10
+// @version      2024-11-26
 // @description  Improves readability of questden.org
 // @author       dediggefedde
 // @match *://questden.org/kusaba/draw/*
@@ -128,25 +128,27 @@ interface JSZip {
 		parse(str: string) {
 			return JSON.parse(str, Storage.reviver);
 		}
-	};
+	}
 	//
 	interface loginCreds {
 		name: string,
 		pw: string,
+		savelogin: boolean,
 		token: string,
 		exp: Date | null
-	};
+	}
 	class LoginCredents extends Storage<loginCreds> {
 		constructor() {
 			let def: loginCreds = {
 				name: "",
 				pw: "",
+				savelogin: true,
 				token: "",
 				exp: null
 			};
 			super("loginCredents", def);
 		}
-	};
+	}
 	class Sync {
 		public creds: LoginCredents; //storage for user/pw
 		public access: number = 0;
@@ -154,9 +156,13 @@ interface JSZip {
 		constructor() {
 			this.creds = new LoginCredents();
 		}
-		public async login(username: string, password: string): Promise<boolean> {
-			this.creds.data.name = username;
-			this.creds.data.pw = password;
+		public async login(username: string, password: string, autosave: boolean): Promise<boolean> {
+			if (autosave) {
+				this.creds.data.name = username;
+				this.creds.data.pw = password;
+			} else {
+				this.creds.data.name = this.creds.data.pw = ""
+			}
 			this.creds.save();
 			return new Promise((resolve, reject) => {
 				GM.xmlHttpRequest({
@@ -167,17 +173,17 @@ interface JSZip {
 					},
 					data: JSON.stringify({
 						type: "test",
-						username: this.creds.data.name,
-						password: this.creds.data.pw
+						username: username,
+						password: password
 					}),
 					onload: (response) => {
 						if (response.status === 200) {
 							try {
 								const result = JSON.parse(response.responseText);
-								if (result.token!==undefined) {
+								if (result.token !== undefined) {
 									this.creds.data.token = result.token;
-									this.access=(result.access!==undefined)?parseInt(result.access):0;
-									this.creds.data.name=result.name??"undefined";
+									this.access = (result.access !== undefined) ? parseInt(result.access) : 0;
+									this.creds.data.name = result.name ?? "undefined";
 									this.creds.data.exp = new Date();
 									this.creds.save();
 									resolve(true);
@@ -238,7 +244,7 @@ interface JSZip {
 								if (result.success === undefined) {
 									reject(`Error: ${response.status}, ${result}`);
 								} else {
-									if(result.access!==undefined)this.access=result.access;
+									if (result.access !== undefined) this.access = result.access;
 									resolve()
 								}
 							} catch (ex) {
@@ -312,7 +318,7 @@ interface JSZip {
 		replyForm: boolean,
 		manageWatchlist: boolean,
 		autoUpdWbar: boolean,
-	};
+	}
 	class Settings extends Storage<setType> {
 		fontTypeList: readonly string[] = ["unset", "Georgia", "Palatino Linotype", "Book Antiqua", "Tahoma", "Arial", "Helvetica", "Verdana", "Times New Roman"];
 		//
@@ -330,14 +336,14 @@ interface JSZip {
 			};
 			super("settings", def);
 		};
-	};
+	}
 	//
 	interface editorConf {
 		colorList: string[],
 		iconList: { label: string, arr: string[] }[],
 		saveText: string,
 		autoSave: boolean
-	};
+	}
 	class EditorConfig extends Storage<editorConf> {
 		constructor() {
 			let def: editorConf = {
@@ -351,7 +357,7 @@ interface JSZip {
 			};
 			super("editorConfig", def);
 		}
-	};
+	}
 	//
 	//GUI interaction
 	class Sidebar {
@@ -362,9 +368,9 @@ interface JSZip {
 		private setting: Settings;
 		private syncr: Sync;
 		barStyle = `
-			#BLICK_bar {width:20px;overflow:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s; right:0px;height:30px;background-color:#9ad;z-index:9;opacity:0.5;top:50px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;}
+			#BLICK_bar {width:20px;overflow:hidden auto;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s; right:0px;height:30px;background-color:#9ad;z-index:9;opacity:0.5;top:50px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;}
 			#BLICK_bar .BLICK_cont {width:250px;font: 16px/2em georgia, Palatino Linotype, Book Antiqua, Tahoma;padding-left: 20px;visibility:hidden;}
-			#BLICK_bar:hover {width:270px;opacity:1;height:420px;}
+			#BLICK_bar:hover {width:270px;opacity:1;height:min(450px, calc(95vh - 50px));}
 			#BLICK_bar:hover .BLICK_cont{visibility:visible;}
 			#BLICK_bar .BLICK_button {background-color: #DDDDFF;border: 1px ridge #CCCCCC;border-radius: 10px 10px 10px 10px;cursor: pointer;display: inline-block;font: 30px/17px georgia;height: 20px;margin: 5px;text-align: center;vertical-align: middle;width: 20px;}
 			#BLICK_bar .BLICK_button:hover {background-color: #aaf;}
@@ -443,6 +449,7 @@ interface JSZip {
 					<div id='BLICK_sync_loginSec'>
 						<input type="input" placeholder="name" value="" id="BLICK_sync_user" style="width:30%;" />
 						<input style="width:30%;" type="password" placeholder="password" value="" id="BLICK_sync_pass" />
+						<label for="BLICK_sync_savelogin" style='width:70%;display: block;cursor: pointer;'><input type="checkbox" id='BLICK_sync_savelogin'/>Store Login Data</label>
 						<input type="submit" onclick="return false;" value="Login" id="BLICK_sync_loggin" />
 						<a href="https://phi.pf-control.de/tgchan/reg.php" target="_blank">Register Account</a>
 					</div>
@@ -492,6 +499,11 @@ interface JSZip {
 			this.syncr.creds.load().then(() => {
 				document.getElementById("BLICK_sync_user")?.setAttribute("value", this.syncr.creds.data.name);
 				document.getElementById("BLICK_sync_pass")?.setAttribute("value", this.syncr.creds.data.pw);
+
+				const checkbox = document.getElementById("BLICK_sync_savelogin") as HTMLInputElement | null;
+				if (checkbox) {
+					checkbox.checked = this.syncr.creds.data.savelogin;
+				}
 			});
 		}
 		//
@@ -582,7 +594,9 @@ interface JSZip {
 			document.getElementById("BLICK_sync_loggin")?.addEventListener("click", (ev) => {
 				let nam = (<HTMLInputElement>document.getElementById("BLICK_sync_user"))?.value;
 				let pw = (<HTMLInputElement>document.getElementById("BLICK_sync_pass"))?.value;
-				this.syncr.login(nam, pw).then((ret) => {
+				let savelogin = (<HTMLInputElement>document.getElementById("BLICK_sync_savelogin"))?.checked;
+
+				this.syncr.login(nam, pw, savelogin).then((ret) => {
 					if (ret === true) {//logged in
 						document.getElementById("BLICK_sync_updownSec")?.style.setProperty("display", "flex");
 						document.getElementById("BLICK_sync_loginSec")?.style.setProperty("display", "none");
@@ -614,7 +628,7 @@ interface JSZip {
 					this.syncr.upload("watchbar", this.dom.watchbar?.wdata ?? null)
 				]).then(res => {
 					if (loginHello) loginHello.innerHTML = "Upload successful!";
-					if (loginAccess) loginAccess.innerHTML = "Last uploaded: " + this.formatDate(this.syncr.access*1000);
+					if (loginAccess) loginAccess.innerHTML = "Last uploaded: " + this.formatDate(this.syncr.access * 1000);
 					console.log("Upload successful!");
 				}).catch(ex => {
 					if (loginHello) loginHello.innerHTML = "Error.";
@@ -1817,11 +1831,10 @@ interface JSZip {
 			const sty = document.createElement("style");
 			sty.id = "BLICK_stylewatchbar";
 			sty.innerHTML = `
-				#BLICK_watch_bar{width:20px;overflow-y:auto;overflow-x:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s, border-radius 1s; right:0px;height:30px;background-color:#fad;z-index:8;opacity:0.5;top:85px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;font-size: 16px;color: #d00;}
-				#BLICK_watch_bar:hover{overflow-y:auto;overflow-x:hidden;opacity:1;width:400px;height:auto;border-bottom-left-radius:5px;border-top-left-radius:5px;}
+				#BLICK_watch_bar{width:20px;overflow-y:auto;overflow-x:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, max-height 0.5s, border-radius 1s; right:0px;max-height:30px;height:30px;background-color:#fad;z-index:8;opacity:0.5;top:85px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;font-size: 16px;color: #d00;}
+				#BLICK_watch_bar:hover{overflow-y:auto;overflow-x:hidden;opacity:1;width:400px;height:auto;border-bottom-left-radius:5px;border-top-left-radius:5px;max-height:calc(95vh - 85px)}
 				#BLICK_watch_bar>*{visibility:hidden;cursor:default;}
 				#BLICK_watch_bar:hover>*{visibility:visible;}
-				#BLICK_watch_bar:hover #BLICK_watch_wrap{width:400px;}
 				#BLICK_watch_bar .BLICK_wbar_headButs{width:16px;height:16px;z-index:99;position:absolute;top:0;cursor:pointer;border:none;background:none;}
 				#BLICK_watch_bar #BLICK_watch_update{right:0;}
 				#BLICK_watch_bar #BLICK_watch_defaultSet{right:25px;}
