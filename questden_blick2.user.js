@@ -141,8 +141,9 @@
       this.serverURL = "https://phi.pf-control.de/tgchan/API.php";
       this.creds = new LoginCredents();
     }
-    async login(username, password, autosave) {
-      if (autosave) {
+    async login(username, password, savelogin) {
+      this.creds.data.savelogin = savelogin;
+      if (savelogin) {
         this.creds.data.name = username;
         this.creds.data.pw = password;
       }

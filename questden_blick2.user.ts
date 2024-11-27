@@ -156,8 +156,9 @@ interface JSZip {
 		constructor() {
 			this.creds = new LoginCredents();
 		}
-		public async login(username: string, password: string, autosave: boolean): Promise<boolean> {
-			if (autosave) {
+		public async login(username: string, password: string, savelogin: boolean): Promise<boolean> {
+			this.creds.data.savelogin=savelogin
+			if (savelogin) {
 				this.creds.data.name = username;
 				this.creds.data.pw = password;
 			} else {
