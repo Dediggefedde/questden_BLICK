@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         questden-BLICK2
+// @name         Questden-BLICK2
 // @namespace    https://phi.pf-control.de/tgchan
-// @version      2024-11-26
+// @version      2024-12-29
 // @description  Improves readability of questden.org
 // @author       dediggefedde
 // @match *://questden.org/kusaba/draw/*
@@ -344,108 +344,108 @@
   class Sidebar {
     constructor(dom, set, syncr) {
       this.barStyle = `
-			#BLICK_bar {width:20px;overflow:hidden auto;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s; right:0px;height:30px;background-color:#9ad;z-index:9;opacity:0.5;top:50px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;}
-			#BLICK_bar .BLICK_cont {width:250px;font: 16px/2em georgia, Palatino Linotype, Book Antiqua, Tahoma;padding-left: 20px;visibility:hidden;}
-			#BLICK_bar:hover {width:270px;opacity:1;height:min(450px, calc(95vh - 50px));}
-			#BLICK_bar:hover .BLICK_cont{visibility:visible;}
-			#BLICK_bar .BLICK_button {background-color: #DDDDFF;border: 1px ridge #CCCCCC;border-radius: 10px 10px 10px 10px;cursor: pointer;display: inline-block;font: 30px/17px georgia;height: 20px;margin: 5px;text-align: center;vertical-align: middle;width: 20px;}
-			#BLICK_bar .BLICK_button:hover {background-color: #aaf;}
-			#BLICK_bar .BLICK_button:active {background-color: #77d;}
-			#BLICK_bar input {margin: 5px;}
-			#BLICK_bar label #BLICK_bar input[type=checkbox] {cursor:pointer;}
-			#BLICK_bar input[type="submit"]:hover {opacity: 0.9;background-color: #32AFFB;}
-			#BLICK_bar input[type="submit"] {cursor: pointer;padding: 4px 8px;font-size: 14px;font-family: Arial, sans-serif;border: none;border-radius: 5px;transition: background-color 0.5s;background-color: #2196F3;color: white;font-weight:bold;}
-			#BLICK_bar select {cursor:pointer;font-size: 16px;}
-			#BLICK_bar .BLICK_Sec {background: #ccf;padding: 0 5px;border-radius: 5px;width: 230px;  margin: 5px 0;}
-			#BLICK_bar .BLICK_sec_buts {display:flex;flex-direction: row;justify-content: space-evenly;}
-			#BLICK_imgbox {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);max-width:90vw;max-height:90vh;z-index:777;display:none;}
-			#BLICK_imgbox .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
-			#BLICK_imgbox .imgEl{width:100%;height:auto;display:none;}
-			#BLICK_sync_updownSec{display:none;flex-direction: row;justify-content: space-evenly;}
-			#BLICK_sync_loginHello{color:green;font-weight:bold;white-space:nowrap;overflow: hidden;}
-			#BLICK_sync_loginAccess{padding-left:10px;color:green;font-size: 8pt;height: 10px;line-height: 3px;}
-			#BLICK_fonttype{width:130px;}
-			.BLICK_floatButs{border:none;background:none;cursor:pointer;position:absolute;top:0;width:16px;height:16px;padding:0;}
-			.BLICK_floatButs:hover{filter:brightness(120%);}
-			#BLICK_set_export{right:0px}
-			#BLICK_set_import{right:18px}
-			#BLICK_bar #BLICK_fontsize{width: 30px;height: 20px;margin: 0;box-sizing: content-box;padding: 0;vertical-align: middle;text-align: center;border: 1px solid #DDDDF0; z-index: 2;position: relative;}
-			#BLICK_bar #BLICK_plus{border-radius: 10px 0px 0px 10px;margin:0;}
-			#BLICK_bar #BLICK_minus{border-radius: 0px 10px 10px 0px;margin:0;}
-	`;
+      #BLICK_bar {width:20px;overflow:hidden auto;position:fixed;transition:width 0.5s,opacity 0.5s, height 0.5s; right:0px;height:30px;background-color:#9ad;z-index:9;opacity:0.5;top:50px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;}
+      #BLICK_bar .BLICK_cont {width:250px;font: 16px/2em georgia, Palatino Linotype, Book Antiqua, Tahoma;padding-left: 20px;visibility:hidden;}
+      #BLICK_bar:hover {width:270px;opacity:1;height:min(450px, calc(95vh - 50px));}
+      #BLICK_bar:hover .BLICK_cont{visibility:visible;}
+      #BLICK_bar .BLICK_button {background-color: #DDDDFF;border: 1px ridge #CCCCCC;border-radius: 10px 10px 10px 10px;cursor: pointer;display: inline-block;font: 30px/17px georgia;height: 20px;margin: 5px;text-align: center;vertical-align: middle;width: 20px;}
+      #BLICK_bar .BLICK_button:hover {background-color: #aaf;}
+      #BLICK_bar .BLICK_button:active {background-color: #77d;}
+      #BLICK_bar input {margin: 5px;}
+      #BLICK_bar label #BLICK_bar input[type=checkbox] {cursor:pointer;}
+      #BLICK_bar input[type="submit"]:hover {opacity: 0.9;background-color: #32AFFB;}
+      #BLICK_bar input[type="submit"] {cursor: pointer;padding: 4px 8px;font-size: 14px;font-family: Arial, sans-serif;border: none;border-radius: 5px;transition: background-color 0.5s;background-color: #2196F3;color: white;font-weight:bold;}
+      #BLICK_bar select {cursor:pointer;font-size: 16px;}
+      #BLICK_bar .BLICK_Sec {background: #ccf;padding: 0 5px;border-radius: 5px;width: 230px;  margin: 5px 0;}
+      #BLICK_bar .BLICK_sec_buts {display:flex;flex-direction: row;justify-content: space-evenly;}
+      #BLICK_imgbox {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);max-width:90vw;max-height:90vh;z-index:777;display:none;}
+      #BLICK_imgbox .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+      #BLICK_imgbox .imgEl{width:100%;height:auto;display:none;}
+      #BLICK_sync_updownSec{display:none;flex-direction: row;justify-content: space-evenly;}
+      #BLICK_sync_loginHello{color:green;font-weight:bold;white-space:nowrap;overflow: hidden;}
+      #BLICK_sync_loginAccess{padding-left:10px;color:green;font-size: 8pt;height: 10px;line-height: 3px;}
+      #BLICK_fonttype{width:130px;}
+      .BLICK_floatButs{border:none;background:none;cursor:pointer;position:absolute;top:0;width:16px;height:16px;padding:0;}
+      .BLICK_floatButs:hover{filter:brightness(120%);}
+      #BLICK_set_export{right:0px}
+      #BLICK_set_import{right:18px}
+      #BLICK_bar #BLICK_fontsize{width: 30px;height: 20px;margin: 0;box-sizing: content-box;padding: 0;vertical-align: middle;text-align: center;border: 1px solid #DDDDF0; z-index: 2;position: relative;}
+      #BLICK_bar #BLICK_plus{border-radius: 10px 0px 0px 10px;margin:0;}
+      #BLICK_bar #BLICK_minus{border-radius: 0px 10px 10px 0px;margin:0;}
+  `;
       this.barHTML = `
-			<div class='BLICK_cont' >
-				<div class="BLICK_row">
-					<button id='BLICK_set_export' class='BLICK_floatButs' title='Export settings to file'>💾</button>
-					<button id='BLICK_set_import' class='BLICK_floatButs' title='Import settings from file'>📁</button>
-					<input id='BLICK_set_importFile' type="file" id="fileInput" style="display: none;" accept=".json">
-					<input type="checkbox" id="BLICK_changeFont" checked="ckecked">
-					<label class="BLICK_title">Font size:</label>
-					<span class="BLICK_button" id="BLICK_plus">+</span>
-					<input type="text" id="BLICK_fontsize" value="0"/>
-					<span class="BLICK_button" id="BLICK_minus">-</span>
-					<br/>
-					<label style='margin-left: 28px;' class="BLICK_title">Font type: </label>
-					<select id="BLICK_fonttype">
-					</select>
-				</div>
-				<div class="BLICK_row">
-					<span class="BLICK_title">
-						<input type="checkbox" id="BLICK_paragraphMargin" alt="Paragraph margin" checked="ckecked">
-						<label for="BLICK_paragraphMargin">Paragraph margin</label>
-					</span>
-				</div>
-				<div class="BLICK_row">
-					<span class="BLICK_title">
-						<input type="checkbox" id="BLICK_imageHover" alt="View image by hover" checked="ckecked">
-						<label for="BLICK_imageHover">View image by hover</label>
-					</span>
-				</div>
-				<div class="BLICK_row">
-					<span class="BLICK_title">
-						<input type="checkbox" id="BLICK_invertCol" alt="Invert colours">
-						<label for="BLICK_invertCol">Invert colours</label>
-					</span>
-				</div>
-				<div class="BLICK_row">
-					<span class="BLICK_title">
-						<input type="checkbox" id="BLICK_replyForm" alt="Change reply form" checked="ckecked">
-						<label for="BLICK_replyForm">Change reply form</label>
-					</span>
-				</div>
-				<div class="BLICK_row">
-					<span class="BLICK_title">
-						<input type="checkbox" id="BLICK_manageWatchlist" alt="Manage watch list" checked="ckecked">
-						<label for="BLICK_manageWatchlist">Manage watch list</label>
-					</span>
-				</div>
-				<div class="BLICK_row BLICK_Sec">
-					<span class="BLICK_title">Synchronize Webserver:</span>
-					<br>
-					<div id='BLICK_sync_loginSec'>
-						<input type="input" placeholder="name" value="" id="BLICK_sync_user" style="width:30%;" />
-						<input style="width:30%;" type="password" placeholder="password" value="" id="BLICK_sync_pass" />
-						<label for="BLICK_sync_savelogin" style='width:70%;display: block;cursor: pointer;'><input type="checkbox" id='BLICK_sync_savelogin'/>Store Login Data</label>
-						<input type="submit" onclick="return false;" value="Login" id="BLICK_sync_loggin" />
-						<a href="https://phi.pf-control.de/tgchan/reg.php" target="_blank">Register Account</a>
-					</div>
-					<div id='BLICK_sync_loginHello'></div>
-					<div id='BLICK_sync_loginAccess'></div>
-					<div id='BLICK_sync_updownSec'>
-						<input type='submit' onclick='return false;' id='BLICK_sync_upload' value='Upload'/>
-						<input type='submit' onclick='return false;' id='BLICK_sync_download' value='Download'/>
-					</div>
-				</div>
-				<div class="BLICK_row BLICK_Sec">
-					<span class="BLICK_title">Export Thread to file:</span>
-					<br>
-					<div class='BLICK_read_readExpButs'>
-						<input type="submit" id="BLICK_epub" value="Epub" onclick="return false;">
-						<input type="submit" id="BLICK_cbz" value="CBZ" onclick="return false;">
-					</div>
-				</div>
-			</div>
-	`;
+      <div class='BLICK_cont' >
+        <div class="BLICK_row">
+          <button id='BLICK_set_export' class='BLICK_floatButs' title='Export settings to file'>💾</button>
+          <button id='BLICK_set_import' class='BLICK_floatButs' title='Import settings from file'>📁</button>
+          <input id='BLICK_set_importFile' type="file" id="fileInput" style="display: none;" accept=".json">
+          <input type="checkbox" id="BLICK_changeFont" checked="ckecked">
+          <label class="BLICK_title">Font size:</label>
+          <span class="BLICK_button" id="BLICK_plus">+</span>
+          <input type="text" id="BLICK_fontsize" value="0"/>
+          <span class="BLICK_button" id="BLICK_minus">-</span>
+          <br/>
+          <label style='margin-left: 28px;' class="BLICK_title">Font type: </label>
+          <select id="BLICK_fonttype">
+          </select>
+        </div>
+        <div class="BLICK_row">
+          <span class="BLICK_title">
+            <input type="checkbox" id="BLICK_paragraphMargin" alt="Paragraph margin" checked="ckecked">
+            <label for="BLICK_paragraphMargin">Paragraph margin</label>
+          </span>
+        </div>
+        <div class="BLICK_row">
+          <span class="BLICK_title">
+            <input type="checkbox" id="BLICK_imageHover" alt="View image by hover" checked="ckecked">
+            <label for="BLICK_imageHover">View image by hover</label>
+          </span>
+        </div>
+        <div class="BLICK_row">
+          <span class="BLICK_title">
+            <input type="checkbox" id="BLICK_invertCol" alt="Invert colours">
+            <label for="BLICK_invertCol">Invert colours</label>
+          </span>
+        </div>
+        <div class="BLICK_row">
+          <span class="BLICK_title">
+            <input type="checkbox" id="BLICK_replyForm" alt="Change reply form" checked="ckecked">
+            <label for="BLICK_replyForm">Change reply form</label>
+          </span>
+        </div>
+        <div class="BLICK_row">
+          <span class="BLICK_title">
+            <input type="checkbox" id="BLICK_manageWatchlist" alt="Manage watch list" checked="ckecked">
+            <label for="BLICK_manageWatchlist">Manage watch list</label>
+          </span>
+        </div>
+        <div class="BLICK_row BLICK_Sec">
+          <span class="BLICK_title">Synchronize Webserver:</span>
+          <br>
+          <div id='BLICK_sync_loginSec'>
+            <input type="input" placeholder="name" value="" id="BLICK_sync_user" style="width:30%;" />
+            <input style="width:30%;" type="password" placeholder="password" value="" id="BLICK_sync_pass" />
+            <label for="BLICK_sync_savelogin" style='width:70%;display: block;cursor: pointer;'><input type="checkbox" id='BLICK_sync_savelogin'/>Store Login Data</label>
+            <input type="submit" onclick="return false;" value="Login" id="BLICK_sync_loggin" />
+            <a href="https://phi.pf-control.de/tgchan/reg.php" target="_blank">Register Account</a>
+          </div>
+          <div id='BLICK_sync_loginHello'></div>
+          <div id='BLICK_sync_loginAccess'></div>
+          <div id='BLICK_sync_updownSec'>
+            <input type='submit' onclick='return false;' id='BLICK_sync_upload' value='Upload'/>
+            <input type='submit' onclick='return false;' id='BLICK_sync_download' value='Download'/>
+          </div>
+        </div>
+        <div class="BLICK_row BLICK_Sec">
+          <span class="BLICK_title">Export Thread to file:</span>
+          <br>
+          <div class='BLICK_read_readExpButs'>
+            <input type="submit" id="BLICK_epub" value="Epub" onclick="return false;">
+            <input type="submit" id="BLICK_cbz" value="CBZ" onclick="return false;">
+          </div>
+        </div>
+      </div>
+  `;
       this.dom = dom;
       this.syncr = syncr;
       this.setting = set;
@@ -769,14 +769,14 @@
     insertHTML() {
       this.pickerDiv = document.createElement("div");
       this.pickerDiv.innerHTML = `
-					<div id="BLICK_iP_tabColumn">
-						<input id="BLICK_iP_seachInp" type="text" placeholder="Search...">
-						<div id="BLICK_iP_tabs"></div>
-					</div>
-					<div id="BLICK_iP_splitter"></div>
-					<div id="BLICK_iP_ImgColumn">
-						<div id="BLICK_iP_loading">loading...</div>
-					</div>`;
+          <div id="BLICK_iP_tabColumn">
+            <input id="BLICK_iP_seachInp" type="text" placeholder="Search...">
+            <div id="BLICK_iP_tabs"></div>
+          </div>
+          <div id="BLICK_iP_splitter"></div>
+          <div id="BLICK_iP_ImgColumn">
+            <div id="BLICK_iP_loading">loading...</div>
+          </div>`;
       this.pickerDiv.id = "BLICK_iconPicker";
       this.container.appendChild(this.pickerDiv);
       //
@@ -788,21 +788,21 @@
       const sty = document.createElement("style");
       sty.id = 'BLICK_iconPicker_style';
       sty.innerHTML = `
-					#BLICK_iconPicker {width: 400px;height: 200px;display: grid;grid-template-columns: 89px auto 1fr;overflow: hidden;background-color: #f8f8f8;user-select: none;flex:1;}
-					#BLICK_iP_tabColumn {height:200px;display: grid;  grid-template-rows: auto 1fr;width:100%;padding: 1px;background-color: #e8e8e8;box-sizing: border-box;gap: 5px;}
-					#BLICK_iP_splitter{background-color: #888;cursor: col-resize;width: 2px;}
-					#BLICK_iP_seachInp {padding: 5px;font-size: 14px;border: 1px solid #ccc;border-radius: 5px;width:100%;box-sizing:border-box;}
-					#BLICK_iP_tabs {display: flex;flex-direction: column;gap: 5px;overflow-y:auto}
-					#BLICK_iP_tabs div {padding: 3px;background-color: #4CAF50;color: white;border: none;border-radius: 5px;cursor: pointer;}
-					#BLICK_iP_tabs div.cur {background-color: #fdc03d;}
-					#BLICK_iP_tabs div:hover {filter: brightness(90%);}
-					#BLICK_iP_tabs div.dragover {background-color: #a5f0a9;}
-					#BLICK_iP_tabs div[data-func] {text-align: center;}
-					#BLICK_iP_ImgColumn {display: flex;grid-gap: 4px;padding: 4px;box-sizing: border-box;align-items: start;overflow-y: auto;width: 100%;flex-wrap: wrap;align-content: flex-start;}
-					#BLICK_iP_ImgColumn .image-container {position: relative;display: flex;flex-direction: column;align-items: center;justify-content: center;}
-					#BLICK_iP_ImgColumn .image-container img {width: 64px;height: 64px;border-radius: 5px;border: 2px solid #ddd;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);object-fit: cover;}
-					#imgContent .image-container:hover img {border-color: #4CAF50;}
-					.selected {outline: 2px dashed #4CAF50;}`;
+          #BLICK_iconPicker {width: 400px;height: 200px;display: grid;grid-template-columns: 89px auto 1fr;overflow: hidden;background-color: #f8f8f8;user-select: none;flex:1;}
+          #BLICK_iP_tabColumn {height:200px;display: grid;  grid-template-rows: auto 1fr;width:100%;padding: 1px;background-color: #e8e8e8;box-sizing: border-box;gap: 5px;}
+          #BLICK_iP_splitter{background-color: #888;cursor: col-resize;width: 2px;}
+          #BLICK_iP_seachInp {padding: 5px;font-size: 14px;border: 1px solid #ccc;border-radius: 5px;width:100%;box-sizing:border-box;}
+          #BLICK_iP_tabs {display: flex;flex-direction: column;gap: 5px;overflow-y:auto}
+          #BLICK_iP_tabs div {padding: 3px;background-color: #4CAF50;color: white;border: none;border-radius: 5px;cursor: pointer;}
+          #BLICK_iP_tabs div.cur {background-color: #fdc03d;}
+          #BLICK_iP_tabs div:hover {filter: brightness(90%);}
+          #BLICK_iP_tabs div.dragover {background-color: #a5f0a9;}
+          #BLICK_iP_tabs div[data-func] {text-align: center;}
+          #BLICK_iP_ImgColumn {display: flex;grid-gap: 4px;padding: 4px;box-sizing: border-box;align-items: start;overflow-y: auto;width: 100%;flex-wrap: wrap;align-content: flex-start;}
+          #BLICK_iP_ImgColumn .image-container {position: relative;display: flex;flex-direction: column;align-items: center;justify-content: center;}
+          #BLICK_iP_ImgColumn .image-container img {width: 64px;height: 64px;border-radius: 5px;border: 2px solid #ddd;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);object-fit: cover;}
+          #imgContent .image-container:hover img {border-color: #4CAF50;}
+          .selected {outline: 2px dashed #4CAF50;}`;
       document.head.appendChild(sty);
     }
     //
@@ -1115,9 +1115,9 @@
       const end = Math.min(this.itemCount + this.itemsPerLoad, this.shownIcons.length);
       for (let i = this.itemCount; i < end; i++) {
         this.imgCol.insertAdjacentHTML("beforeend", `
-								<div class="image-container" draggable="true" title="${this.shownIcons[i]}">
-										<img src="https://questden.org/kusaba/icons/thumb/${this.shownIcons[i]}" alt="${this.shownIcons[i]}" />
-								</div>`);
+                <div class="image-container" draggable="true" title="${this.shownIcons[i]}">
+                    <img src="https://questden.org/kusaba/icons/thumb/${this.shownIcons[i]}" alt="${this.shownIcons[i]}" />
+                </div>`);
       }
       this.itemCount = end;
       this.imgCol.appendChild(this.loading);
@@ -1255,33 +1255,33 @@
       const sty = document.createElement("style");
       sty.id = "BLICK_stylebar";
       sty.innerHTML = `
-				#BLICK_bigcont{background-color:#6f6f6f;width:100%;padding:3px 0;}
-				.BLICK_style{display:inline-block;width:24px;height:24px;overflow:hidden;background-image: url('${imgRes.stylebuts}');background-repeat:no-repeat;}
-				.BLICK_style:hover{background-position-y: -24px;}
-				.BLICK_style:active{background-position-y: -48px;}
-				#BLICK_pallette a {display: inline-block;	height: 20px;width: 20px; margin: 2px;background-color:attr(bgcol);}
-				#BLICK_pallette {width: 145px;}
-				#BLICK_colorpalette{padding:3px;box-sizing: border-box;display:none;}
-				#BLICK_colorpalette.shown{display:flex;gap:10px;}
-				#BLICK_cp{display:flex;height:100px;} 
-				#BLICK_cp_colorDisplay { height: 40px; user-select: none;cursor:pointer;	}
-				#BLICK_cp_bgDisplay { height: 40px; user-select: none;cursor:pointer;	} 
-				#BLICK_cp_colTex {height: 20px;box-sizing: border-box;font-family: 'Courier New', Courier, monospace;text-transform: uppercase;border: 1px solid #ccc;border-radius: 4px;background-color: #f9f9f9;color: #333;text-align: center;z-index: 9;font-size: 11px;padding: 2px;width: 60px;letter-spacing: 0.5px;} 
-				#BLICK_cp_colPrev { display: flex; flex-direction: column; width:60px;	} 
-				#BLICK_cp .slider { writing-mode: vertical-lr; appearance: none; width: 10px; height: 100%; outline: none;	} 
-				#BLICK_cp .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 5px; background: #ffffff77; border: 1px solid black; border-radius: 2px; cursor: pointer; opacity: 0.8;	}
-				#BLICK_cp .slider:hover::-webkit-slider-thumb { opacity: 1;} 
-				#BLICK_cp .slider::-moz-range-thumb { width: 10px; height: 5px; background: #ffffff77; border: 1px solid black; border-radius: 2px; cursor: pointer; opacity: 0.8;	} 
-				#BLICK_cp .slider:hover::-moz-range-thumb { opacity: 1;} 
-				#BLICK_cp .slider[id="BLICK_cp_hue"] { background: linear-gradient(to bottom, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));	}
-				#BLICK_colChoice a.customCol{border:1px dashed black;}
-				#BLICK_colChoice a {display: inline-block;	height: 20px;width: 20px; margin: 2px;background-color:attr(bgcol);}
-				#BLICK_colChoice {width: 130px;}
-				#BLICK_extendBar{display:flex;}
-				#BLICK_saveTimeStamp{position: absolute;bottom: 10px;right: 50px; font-size: 12px;color: #3333; pointer-events: none;}
-				#BLICK_autoSaveBut{ padding: 0;float: right;margin: 0 10px;}
-				#BLICK_autoSaveBut input, #BLICK_autoSaveBut label{ cursor: pointer;}
-			`;
+        #BLICK_bigcont{background-color:#6f6f6f;width:100%;padding:3px 0;}
+        .BLICK_style{display:inline-block;width:24px;height:24px;overflow:hidden;background-image: url('${imgRes.stylebuts}');background-repeat:no-repeat;}
+        .BLICK_style:hover{background-position-y: -24px;}
+        .BLICK_style:active{background-position-y: -48px;}
+        #BLICK_pallette a {display: inline-block;	height: 20px;width: 20px; margin: 2px;background-color:attr(bgcol);}
+        #BLICK_pallette {width: 145px;}
+        #BLICK_colorpalette{padding:3px;box-sizing: border-box;display:none;}
+        #BLICK_colorpalette.shown{display:flex;gap:10px;}
+        #BLICK_cp{display:flex;height:100px;} 
+        #BLICK_cp_colorDisplay { height: 40px; user-select: none;cursor:pointer;	}
+        #BLICK_cp_bgDisplay { height: 40px; user-select: none;cursor:pointer;	} 
+        #BLICK_cp_colTex {height: 20px;box-sizing: border-box;font-family: 'Courier New', Courier, monospace;text-transform: uppercase;border: 1px solid #ccc;border-radius: 4px;background-color: #f9f9f9;color: #333;text-align: center;z-index: 9;font-size: 11px;padding: 2px;width: 60px;letter-spacing: 0.5px;} 
+        #BLICK_cp_colPrev { display: flex; flex-direction: column; width:60px;	} 
+        #BLICK_cp .slider { writing-mode: vertical-lr; appearance: none; width: 10px; height: 100%; outline: none;	} 
+        #BLICK_cp .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 5px; background: #ffffff77; border: 1px solid black; border-radius: 2px; cursor: pointer; opacity: 0.8;	}
+        #BLICK_cp .slider:hover::-webkit-slider-thumb { opacity: 1;} 
+        #BLICK_cp .slider::-moz-range-thumb { width: 10px; height: 5px; background: #ffffff77; border: 1px solid black; border-radius: 2px; cursor: pointer; opacity: 0.8;	} 
+        #BLICK_cp .slider:hover::-moz-range-thumb { opacity: 1;} 
+        #BLICK_cp .slider[id="BLICK_cp_hue"] { background: linear-gradient(to bottom, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));	}
+        #BLICK_colChoice a.customCol{border:1px dashed black;}
+        #BLICK_colChoice a {display: inline-block;	height: 20px;width: 20px; margin: 2px;background-color:attr(bgcol);}
+        #BLICK_colChoice {width: 130px;}
+        #BLICK_extendBar{display:flex;}
+        #BLICK_saveTimeStamp{position: absolute;bottom: 10px;right: 50px; font-size: 12px;color: #3333; pointer-events: none;}
+        #BLICK_autoSaveBut{ padding: 0;float: right;margin: 0 10px;}
+        #BLICK_autoSaveBut input, #BLICK_autoSaveBut label{ cursor: pointer;}
+      `;
       document.head.appendChild(sty);
     }
     insertBar() {
@@ -1434,15 +1434,15 @@
       let pick = document.createElement("div");
       pick.id = "BLICK_cp";
       pick.innerHTML = `
-					<div id="BLICK_cp_colPrev">
-						<div id="BLICK_cp_colorDisplay">Click to insert</div>
-						<div id="BLICK_cp_bgDisplay"></div>
-						<input type="text" id="BLICK_cp_colTex" />
-					</div>
-					<input type="range" id="BLICK_cp_hue" class="slider" min="0" max="360" value="0" step="1" orient="vertical">
-					<input type="range" id="BLICK_cp_saturation" class="slider" min="0" max="100" value="0" step="10"
-						orient="vertical">
-					<input type="range" id="BLICK_cp_lightness" class="slider" min="0" max="100" value="50" step="5" orient="vertical">`;
+          <div id="BLICK_cp_colPrev">
+            <div id="BLICK_cp_colorDisplay">Click to insert</div>
+            <div id="BLICK_cp_bgDisplay"></div>
+            <input type="text" id="BLICK_cp_colTex" />
+          </div>
+          <input type="range" id="BLICK_cp_hue" class="slider" min="0" max="360" value="0" step="1" orient="vertical">
+          <input type="range" id="BLICK_cp_saturation" class="slider" min="0" max="100" value="0" step="10"
+            orient="vertical">
+          <input type="range" id="BLICK_cp_lightness" class="slider" min="0" max="100" value="50" step="5" orient="vertical">`;
       //
       document.getElementById("BLICK_colorpalette")?.appendChild(pick);
       //
@@ -1637,7 +1637,7 @@
   class WatchData extends Storage {
     constructor() {
       let def = {
-        numLinkMode: 0,
+        numLinkMode: 1,
         threads: new Map(),
         default: {
           label: "Default",
@@ -1678,6 +1678,7 @@
     destroy() {
       document.getElementById("BLICK_watch_bar")?.remove();
       document.getElementById("BLICK_stylewatchbar")?.remove();
+      document.getElementById("BLICK_wbar_form-container")?.remove();
     }
     insertHTML() {
       const wbar = document.createElement("div"); //hover notch&container with overflow-scroll
@@ -1763,48 +1764,48 @@
       this.setDiag.id = "BLICK_wbar_set_overlay";
       this.setDiag.style.display = "none";
       this.setDiag.innerHTML = `
-			<div id="BLICK_wbar_form-container">
-				<h2>Settings</h2>
-				<p id="BLICK_wbar_formSubtitle">Options for 'Divequest ch4'</p>
-				<div id="BLICK_wbar_form-grid">
-				<div class="BLICK_wbar_setSect" id='BLICK_wbar_genSec'>
-					<span class='BLICK_wbar_secTitl'>General Settings</span>
-						<label for="BLICK_wbar_autoUpdate">Automatically update:</label>
-						<div class="checkbox-container">
-							<input type="checkbox" id="BLICK_wbar_autoUpdate">
-							<label for="BLICK_wbar_autoUpdate">On pageload</label>
-						</div>
-						<label for="BLICK_wbar_linkTo">Number links to:</label>
-						<select id="BLICK_wbar_linkTo">
-							<option value="new">Last known post</option>
-							<option value="current">Last reading position</option>
-							<option value="none">No specific post</option>
-						</select>
-					</div>
-					<div class="BLICK_wbar_setSect" id='BLICK_wbar_threadSec'>
-						<span class='BLICK_wbar_secTitl'>Default Thread Settings</span>
-						<label for="BLICK_wbar_highlightNew">Count New:</label>
-						<div class="checkbox-container">
-							<input type="checkbox" id="BLICK_wbar_highlightNew">
-							<label for="BLICK_wbar_highlightNew">Only Images</label>
-						</div>
-						<label for="BLICK_wbar_highlightNames">Only Names</label>
-						<input type="text" id="BLICK_wbar_highlightNames" title="Names, comma separated">
-						<label for="BLICK_wbar_highlightIDs">Only IDs</label>
-						<input type="text" id="BLICK_wbar_highlightIDs" title="IDs, comma separated">
-						<label for="BLICK_wbar_ignoreNames">Ignore Names</label>
-						<input type="text" id="BLICK_wbar_ignoreNames" title="Names, comma separated">
-						<label for="BLICK_wbar_ignoreIDs">Ignore IDs</label>
-						<input type="text" id="BLICK_wbar_ignoreIDs" title="IDs, comma separated">
-					</div>
-				</div>
-				<div id="BLICK_wbar_button-row">
-					<button data-role="save">Save</button>
-					<button data-role="cancel">Cancel</button>
-					<button data-role="default">Default</button>
-					<button data-role="overwrite">Apply to all</button>
-				</div>
-			</div>`;
+      <div id="BLICK_wbar_form-container">
+        <h2>Settings</h2>
+        <p id="BLICK_wbar_formSubtitle">Options for 'Divequest ch4'</p>
+        <div id="BLICK_wbar_form-grid">
+        <div class="BLICK_wbar_setSect" id='BLICK_wbar_genSec'>
+          <span class='BLICK_wbar_secTitl'>General Settings</span>
+            <label for="BLICK_wbar_autoUpdate">Automatically update:</label>
+            <div class="checkbox-container">
+              <input type="checkbox" id="BLICK_wbar_autoUpdate">
+              <label for="BLICK_wbar_autoUpdate">On pageload</label>
+            </div>
+            <label for="BLICK_wbar_linkTo">Number links to:</label>
+            <select id="BLICK_wbar_linkTo">
+              <option value="new">Last known post</option>
+              <option value="current">Last reading position</option>
+              <option value="none">No specific post</option>
+            </select>
+          </div>
+          <div class="BLICK_wbar_setSect" id='BLICK_wbar_threadSec'>
+            <span class='BLICK_wbar_secTitl'>Default Thread Settings</span>
+            <label for="BLICK_wbar_highlightNew">Count New:</label>
+            <div class="checkbox-container">
+              <input type="checkbox" id="BLICK_wbar_highlightNew">
+              <label for="BLICK_wbar_highlightNew">Only Images</label>
+            </div>
+            <label for="BLICK_wbar_highlightNames">Only Names</label>
+            <input type="text" id="BLICK_wbar_highlightNames" title="Names, comma separated">
+            <label for="BLICK_wbar_highlightIDs">Only IDs</label>
+            <input type="text" id="BLICK_wbar_highlightIDs" title="IDs, comma separated">
+            <label for="BLICK_wbar_ignoreNames">Ignore Names</label>
+            <input type="text" id="BLICK_wbar_ignoreNames" title="Names, comma separated">
+            <label for="BLICK_wbar_ignoreIDs">Ignore IDs</label>
+            <input type="text" id="BLICK_wbar_ignoreIDs" title="IDs, comma separated">
+          </div>
+        </div>
+        <div id="BLICK_wbar_button-row">
+          <button data-role="save">Save</button>
+          <button data-role="cancel">Cancel</button>
+          <button data-role="default">Default</button>
+          <button data-role="overwrite">Apply to all</button>
+        </div>
+      </div>`;
       document.body.appendChild(this.setDiag);
       this.setDiag.addEventListener("click", function (ev) {
         if (ev.target == this)
@@ -1842,50 +1843,50 @@
       const sty = document.createElement("style");
       sty.id = "BLICK_stylewatchbar";
       sty.innerHTML = `
-				#BLICK_watch_bar{width:20px;overflow-y:auto;overflow-x:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, max-height 0.5s, border-radius 1s; right:0px;max-height:30px;height:30px;background-color:#fad;z-index:8;opacity:0.5;top:85px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;font-size: 16px;color: #d00;}
-				#BLICK_watch_bar:hover{overflow-y:auto;overflow-x:hidden;opacity:1;width:400px;height:auto;border-bottom-left-radius:5px;border-top-left-radius:5px;max-height:calc(95vh - 85px)}
-				#BLICK_watch_bar>*{visibility:hidden;cursor:default;}
-				#BLICK_watch_bar:hover>*{visibility:visible;}
-				#BLICK_watch_bar .BLICK_wbar_headButs{width:16px;height:16px;z-index:99;position:absolute;top:0;cursor:pointer;border:none;background:none;}
-				#BLICK_watch_bar #BLICK_watch_update{right:0;}
-				#BLICK_watch_bar #BLICK_watch_defaultSet{right:25px;}
-				#BLICK_watch_bar #BLICK_watch_import{right:50px;}
-				#BLICK_watch_bar #BLICK_watch_export{right:75px;}
-				#BLICK_watch_bar .BLICK_wbar_headButs:hover{filter:brightness(120%);}
-				#BLICK_watch_bar button:hover{filter:brightness(120%);}
-				#BLICK_watch_wrap{display: grid; grid-template-columns: auto 100px 45px 50px;}
-				#BLICK_watch_bar .BLICK_wrow {display: contents; padding: 0px 5px;}
-				#BLICK_watch_bar .BLICK_wrow:nth-child(2n)>div.BLICK_wcell{background-color: #F0D0C6;}
-				#BLICK_watch_bar .BLICK_wrow:nth-child(2n+1)>div.BLICK_wcell{background-color: #FBC1AF;}
-				#BLICK_watch_bar .BLICK_wrow>div.BLICK_wcell{display: inline-block; vertical-align: top; word-wrap: break-word;line-height:23px;padding:0 5px;}
-				#BLICK_watch_bar .BLICK_whead{background-color: #EEAA88;grid-column: 1 / -1;text-align: center;font-weight: bold;padding: 2px;color: black;}
-				#BLICK_watch_bar .BLICK_wactions button{width:16px;height:16px;font-size:14px;border:none;background:none;cursor:pointer;display:inline-block;}
-				#BLICK_watch_bar a:hover{cursor:pointer;}
-				#BLICK_watch_bar div.BLICK_wauthor{color: green;font-weight: bold;}
-				#BLICK_watch_bar div.BLICK_wnew a{color: blue;}
-				#BLICK_watch_bar div.BLICK_title a{color: red;}
-				#BLICK_wbar_set_overlay {position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background-color: rgba(0, 0, 0, 0.5);display: flex;justify-content: center;align-items: center;z-index: 1000;}
-				#BLICK_wbar_form-container{background-color: #fffff0;padding: 20px;border-radius: 8px;box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);max-width: 400px;width: 90%;font-family: Arial, sans-serif;border: 1px solid #b0a394;}
-				#BLICK_wbar_form-container h2 {margin-top: 0;font-size: 1.4em;color: #333;text-align: center;}
-				#BLICK_wbar_form-container p {font-size: 0.9em;color: #666;text-align: center;margin-top: 0;margin-bottom: 15px;}
-				#BLICK_wbar_form-grid {margin-bottom: 15px;}
-				#BLICK_wbar_form-grid label {font-size: 0.9em;color: #555;display: flex;align-items: center;justify-content: flex-end;}
-				#BLICK_wbar_form-grid input[type="text"] {padding: 8px;border: 1px solid #ccc;border-radius: 4px;font-size: 0.9em;}
-				#BLICK_wbar_form-grid input[type="checkbox"] {cursor:pointer}
-				#BLICK_wbar_form-grid .checkbox-container {display: flex;align-items: center;justify-content: center;}
-				#BLICK_wbar_form-grid .checkbox-container label {margin-left: 8px;cursor:pointer}
-				#BLICK_wbar_button-row {display: flex;gap: 10px;justify-content: space-between;}
-				#BLICK_wbar_button-row button {flex: 1;padding: 8px;border: none;border-radius: 4px;font-size: 0.9em;cursor: pointer;transition: background-color 0.2s;color: white;}
-				#BLICK_wbar_button-row button:hover {opacity: 0.9;}
-				#BLICK_wbar_button-row button[data-role="save"] { background-color: #3ba44b;}
-				#BLICK_wbar_button-row button[data-role="cancel"] { background-color: #bb5546;}
-				#BLICK_wbar_button-row button[data-role="default"] { background-color: #304f79;}
-				#BLICK_wbar_button-row button[data-role="overwrite"] { background-color: #dd9243;}
-				.BLICK_wbutton_iswatched{transition:filter 0.5s;filter: hue-rotate(150deg) brightness(150%);}
-				.BLICK_wbar_setSect{position: relative;margin-bottom: 15px; display: grid;grid-template-columns: 150px auto;grid-column: span 2;gap: 15px;border: 1px solid #aaa;border-radius: 5px;padding: 15px;padding-top:25px;}
-				#BLICK_wbar_linkTo {padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
-				.BLICK_wbar_secTitl{position: absolute;left: 5px;right: 0;font-size: smaller;color: #aaa;}
-			`;
+        #BLICK_watch_bar{width:20px;overflow-y:auto;overflow-x:hidden;position:fixed;transition:width 0.5s,opacity 0.5s, max-height 0.5s, border-radius 1s; right:0px;max-height:30px;height:30px;background-color:#fad;z-index:8;opacity:0.5;top:85px;border:2px ridge #ddf;border-top-left-radius:25px;border-bottom-left-radius:25px;font-size: 16px;color: #d00;}
+        #BLICK_watch_bar:hover{overflow-y:auto;overflow-x:hidden;opacity:1;width:400px;height:auto;border-bottom-left-radius:5px;border-top-left-radius:5px;max-height:calc(95vh - 85px)}
+        #BLICK_watch_bar>*{visibility:hidden;cursor:default;}
+        #BLICK_watch_bar:hover>*{visibility:visible;}
+        #BLICK_watch_bar .BLICK_wbar_headButs{width:16px;height:16px;z-index:99;position:absolute;top:0;cursor:pointer;border:none;background:none;}
+        #BLICK_watch_bar #BLICK_watch_update{right:0;}
+        #BLICK_watch_bar #BLICK_watch_defaultSet{right:25px;}
+        #BLICK_watch_bar #BLICK_watch_import{right:50px;}
+        #BLICK_watch_bar #BLICK_watch_export{right:75px;}
+        #BLICK_watch_bar .BLICK_wbar_headButs:hover{filter:brightness(120%);}
+        #BLICK_watch_bar button:hover{filter:brightness(120%);}
+        #BLICK_watch_wrap{display: grid; grid-template-columns: auto 100px 45px 50px;}
+        #BLICK_watch_bar .BLICK_wrow {display: contents; padding: 0px 5px;}
+        #BLICK_watch_bar .BLICK_wrow:nth-child(2n)>div.BLICK_wcell{background-color: #F0D0C6;}
+        #BLICK_watch_bar .BLICK_wrow:nth-child(2n+1)>div.BLICK_wcell{background-color: #FBC1AF;}
+        #BLICK_watch_bar .BLICK_wrow>div.BLICK_wcell{display: inline-block; vertical-align: top; word-wrap: break-word;line-height:23px;padding:0 5px;}
+        #BLICK_watch_bar .BLICK_whead{background-color: #EEAA88;grid-column: 1 / -1;text-align: center;font-weight: bold;padding: 2px;color: black;}
+        #BLICK_watch_bar .BLICK_wactions button{width:16px;height:16px;font-size:14px;border:none;background:none;cursor:pointer;display:inline-block;}
+        #BLICK_watch_bar a:hover{cursor:pointer;}
+        #BLICK_watch_bar div.BLICK_wauthor{color: green;font-weight: bold;}
+        #BLICK_watch_bar div.BLICK_wnew a{color: blue;}
+        #BLICK_watch_bar div.BLICK_title a{color: red;}
+        #BLICK_wbar_set_overlay {position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background-color: rgba(0, 0, 0, 0.5);display: flex;justify-content: center;align-items: center;z-index: 1000;}
+        #BLICK_wbar_form-container{background-color: #fffff0;padding: 20px;border-radius: 8px;box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);max-width: 400px;width: 90%;font-family: Arial, sans-serif;border: 1px solid #b0a394;}
+        #BLICK_wbar_form-container h2 {margin-top: 0;font-size: 1.4em;color: #333;text-align: center;}
+        #BLICK_wbar_form-container p {font-size: 0.9em;color: #666;text-align: center;margin-top: 0;margin-bottom: 15px;}
+        #BLICK_wbar_form-grid {margin-bottom: 15px;}
+        #BLICK_wbar_form-grid label {font-size: 0.9em;color: #555;display: flex;align-items: center;justify-content: flex-end;}
+        #BLICK_wbar_form-grid input[type="text"] {padding: 8px;border: 1px solid #ccc;border-radius: 4px;font-size: 0.9em;}
+        #BLICK_wbar_form-grid input[type="checkbox"] {cursor:pointer}
+        #BLICK_wbar_form-grid .checkbox-container {display: flex;align-items: center;justify-content: center;}
+        #BLICK_wbar_form-grid .checkbox-container label {margin-left: 8px;cursor:pointer}
+        #BLICK_wbar_button-row {display: flex;gap: 10px;justify-content: space-between;}
+        #BLICK_wbar_button-row button {flex: 1;padding: 8px;border: none;border-radius: 4px;font-size: 0.9em;cursor: pointer;transition: background-color 0.2s;color: white;}
+        #BLICK_wbar_button-row button:hover {opacity: 0.9;}
+        #BLICK_wbar_button-row button[data-role="save"] { background-color: #3ba44b;}
+        #BLICK_wbar_button-row button[data-role="cancel"] { background-color: #bb5546;}
+        #BLICK_wbar_button-row button[data-role="default"] { background-color: #304f79;}
+        #BLICK_wbar_button-row button[data-role="overwrite"] { background-color: #dd9243;}
+        .BLICK_wbutton_iswatched{transition:filter 0.5s;filter: hue-rotate(150deg) brightness(150%);}
+        .BLICK_wbar_setSect{position: relative;margin-bottom: 15px; display: grid;grid-template-columns: 150px auto;grid-column: span 2;gap: 15px;border: 1px solid #aaa;border-radius: 5px;padding: 15px;padding-top:25px;}
+        #BLICK_wbar_linkTo {padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+        .BLICK_wbar_secTitl{position: absolute;left: 5px;right: 0;font-size: smaller;color: #aaa;}
+      `;
       document.head.appendChild(sty);
     }
     showSettingDiag(id, def = false) {
@@ -2054,6 +2055,25 @@
           console.error("Fehler beim Laden der Daten:", error);
         });
     }
+    generateLink(thread, id, curReadInd) {
+      let add = "";
+      let jump = "";
+      let targetInd = this.wdata.data.numLinkMode == 1 ? thread.newEntrCnt : (thread.totalEntrCnt - curReadInd);
+      //target last known or last read depending on mode
+      if (targetInd < 50 && thread.totalEntrCnt > 50)
+        add = "+50";
+      else if (targetInd < 100 && thread.totalEntrCnt > 100)
+        add = "+100";
+      //+50/+100 if possible and target in page.
+      if (curReadInd == -1 && this.wdata.data.numLinkMode == 1)
+        add = "";
+      //when inserting without update, knowing last reading position is within +50/+500 is not possible.
+      if (this.wdata.data.numLinkMode == 0 && thread.lastReadId !== "")
+        jump = "#" + thread.lastReadId;
+      if (this.wdata.data.numLinkMode == 1 && thread.currentReadId !== "")
+        jump = "#" + thread.currentReadId;
+      return `https://questden.org/kusaba/${thread.section}/res/${id}${add}.html${jump}`;
+    }
     updateEntries() {
       let fetchPromise = [];
       document.getElementById("BLICK_watch_update")?.style.setProperty("filter", "hue-rotate(150deg)");
@@ -2068,8 +2088,11 @@
             //parse website
             let lastReadElement = null;
             let newCount = 0;
+            let curReadInd = -1; //index of current read position
             const replyElements = doc.querySelectorAll(`td.reply`);
-            replyElements.forEach(td => {
+            replyElements.forEach((td, ind) => {
+              if (thread.currentReadId == td.id)
+                curReadInd = ind;
               if (lastReadElement === null && (td.id.endsWith(thread.lastReadId) || thread.lastReadId == ""))
                 lastReadElement = td; //filter for only new elements
               if (lastReadElement !== null) { //ignore old
@@ -2095,18 +2118,8 @@
             //update list
             let entrNewCnt = document.querySelector(`div.BLICK_wrow[data-id='${id}'] div.BLICK_wnew a`);
             if (entrNewCnt !== null) {
-              let add = "";
-              if (thread.newEntrCnt < 50 && thread.totalEntrCnt > 50)
-                add = "+50";
-              else if (thread.newEntrCnt < 100 && thread.totalEntrCnt > 100)
-                add = "+100";
-              let jump = "";
-              if (this.wdata.data.numLinkMode == 0 && thread.lastReadId !== "")
-                jump = "#" + thread.lastReadId;
-              if (this.wdata.data.numLinkMode == 1 && thread.currentReadId !== "")
-                jump = "#" + thread.currentReadId;
               entrNewCnt.innerHTML = String(newCount);
-              entrNewCnt.href = `https://questden.org/kusaba/${thread.section}/res/${id}${add}.html${jump}`;
+              entrNewCnt.href = this.generateLink(thread, id, curReadInd);
             }
             let entrLabel = document.querySelector(`div.BLICK_wrow[data-id='${id}'] div.BLICK_wtitle a`);
             if (entrLabel !== null)
@@ -2137,28 +2150,17 @@
         }
         threads.forEach(id => {
           const el = this.wdata.data.threads.get(id);
-          let add = "";
-          if (el.newEntrCnt < 50 && el.totalEntrCnt > 50)
-            add = "+50";
-          else if (el.newEntrCnt < 100 && el.totalEntrCnt > 100)
-            add = "+100";
-          let jump = "";
-          if (this.wdata.data.numLinkMode == 0 && el.lastReadId !== "")
-            jump = "#" + el.lastReadId;
-          if (this.wdata.data.numLinkMode == 1 && el.currentReadId !== "")
-            jump = "#" + el.currentReadId;
-          //
           const row = document.createElement('div');
           row.className = "BLICK_wrow";
           row.dataset.id = id;
           row.innerHTML = `
-					<div class="BLICK_wcell BLICK_wtitle"><a target="_blank" href="https://questden.org/kusaba/${el.section}/res/${id}.html">${el.label}</a></div>
-					<div class="BLICK_wcell BLICK_wauthor">${el.author}</div>
-					<div class="BLICK_wcell BLICK_wnew"><a target="_blank" href="https://questden.org/kusaba/${el.section}/res/${id}${add}.html${jump}">${el.newEntrCnt ?? 0}</a></div>
-					<div class="BLICK_wcell BLICK_wactions">
-							<button data-role='remove' title='Remove watch'>🗑️</button>
-							<button data-role='options' title='Adjust settings'>🛠️</button>
-					</div>`;
+          <div class="BLICK_wcell BLICK_wtitle"><a target="_blank" href="https://questden.org/kusaba/${el.section}/res/${id}.html">${el.label}</a></div>
+          <div class="BLICK_wcell BLICK_wauthor">${el.author}</div>
+          <div class="BLICK_wcell BLICK_wnew"><a target="_blank" href="${this.generateLink(el, id, -1)}">${el.newEntrCnt ?? 0}</a></div>
+          <div class="BLICK_wcell BLICK_wactions">
+              <button data-role='remove' title='Remove watch'>🗑️</button>
+              <button data-role='options' title='Adjust settings'>🛠️</button>
+          </div>`;
           fragment.appendChild(row);
         });
       });
@@ -2198,58 +2200,58 @@
       this.form.style.display = "none";
       this.form.id = "BLICK_epub_form_overlay";
       this.form.innerHTML = `
-				<div id="BLICK_epub_form">
-					<h2>Export Thread to EPUB</h2>
-					<label for="BLICK_epub_title">Title:</label>
-					<input type="text" id="BLICK_epub_title" class="BLICK_epub_input" placeholder="Enter title" required="">
-					<label for="BLICK_epub_author">Author:</label>
-					<input type="text" id="BLICK_epub_author" class="BLICK_epub_input" placeholder="Enter author" required="">
-					<div id='BLICK_epub_checkmarks'>
-						<label for="BLICK_epub_includeImages">
-							<input type="checkbox" id="BLICK_epub_includeImages">
-							Only Include Posts with Images
-						</label>
-						<label for="BLICK_epub_includeChecked">
-							<input type="checkbox" id="BLICK_epub_includeChecked">
-							Only Include checked Posts
-						</label>
-					</div>
-					<label for="BLICK_epub_imageQuality">Image Quality</label>
-					<select id="BLICK_epub_imageQuality" class="BLICK_epub_select">
-						<option value="convert">Convert images</option>
-						<option value="fullsize">Use fullsize images</option>
-						<option value="thumbnail">Use thumbnails</option>
-					</select>
-					<label for="BLICK_epub_imageSetting">Image Settings</label>
-					<div id='BLICK_epub_imageSetting'>
-						<label for="BLICK_epub_imageFormat">Format</label>
-						<select id="BLICK_epub_imageFormat" class="BLICK_epub_select" title='Target image format.\nWebp is compresses best and supports animations, but is not yet supported by Kindle.\nJPG compresses photos and gradients well and is widely supported, but removes animations.\nNot converting preserves the format, but gif-animations are replaced by their first frame.'>
-							<option value="webp">webp</option>
-							<option value="jpg">JPG</option>
-							<option value="unchanged">Don't convert</option>
-						</select>
-						<label for="BLICK_epub_imageMaxW">Max width:</label>
-						<input type="text" id="BLICK_epub_imageMaxW" class="BLICK_epub_input" placeholder="Max width" title="Max width in px. 0 to ignore.">
-						<label for="BLICK_epub_imageMaxH">Max height:</label>
-						<input type="text" id="BLICK_epub_imageMaxH" class="BLICK_epub_input" placeholder="Max height" title="Max height in px. 0 to ignore.">
-					</div>
-					<label for="BLICK_epub_includeAuthors">Filter by Author:</label>
-					<input type="text" id="BLICK_epub_includeAuthors" class="BLICK_epub_input" placeholder="Author ID or name" style="">
-					<button data-role="detect" class="BLICK_epub_button" title='Generates a list of Names and IDs of the authors of posts with images'>Detect</button>
-					<label for="BLICK_epub_excludeAuthors">Exclude Authors:</label>
-					<input type="text" id="BLICK_epub_excludeAuthors" class="BLICK_epub_input" placeholder="Authors to exclude">
-					<label for="BLICK_epub_styleSelect">Select Style:</label>
-					<select id="BLICK_epub_styleSelect" class="BLICK_epub_select">
-						<option>Simple, full-width images</option>
-						<option>Simple, floating images with max. width</option>
-					</select>
-					<div id="BLICK_epub_stat">0 Posts, 0 Images</div>
-					<div class="BLICK_epub_buttons">
-						<button data-role="export" class="BLICK_epub_button">Export</button>
-						<button data-role="cancel" class="BLICK_epub_button">Cancel</button>
-						<button data-role="select" class="BLICK_epub_button" title='highlights and checks all posts that will go into the epub file'>Highlight</button>
-					</div>
-				</div>`;
+        <div id="BLICK_epub_form">
+          <h2>Export Thread to EPUB</h2>
+          <label for="BLICK_epub_title">Title:</label>
+          <input type="text" id="BLICK_epub_title" class="BLICK_epub_input" placeholder="Enter title" required="">
+          <label for="BLICK_epub_author">Author:</label>
+          <input type="text" id="BLICK_epub_author" class="BLICK_epub_input" placeholder="Enter author" required="">
+          <div id='BLICK_epub_checkmarks'>
+            <label for="BLICK_epub_includeImages">
+              <input type="checkbox" id="BLICK_epub_includeImages">
+              Only Include Posts with Images
+            </label>
+            <label for="BLICK_epub_includeChecked">
+              <input type="checkbox" id="BLICK_epub_includeChecked">
+              Only Include checked Posts
+            </label>
+          </div>
+          <label for="BLICK_epub_imageQuality">Image Quality</label>
+          <select id="BLICK_epub_imageQuality" class="BLICK_epub_select">
+            <option value="convert">Convert images</option>
+            <option value="fullsize">Use fullsize images</option>
+            <option value="thumbnail">Use thumbnails</option>
+          </select>
+          <label for="BLICK_epub_imageSetting">Image Settings</label>
+          <div id='BLICK_epub_imageSetting'>
+            <label for="BLICK_epub_imageFormat">Format</label>
+            <select id="BLICK_epub_imageFormat" class="BLICK_epub_select" title='Target image format.\nWebp is compresses best and supports animations, but is not yet supported by Kindle.\nJPG compresses photos and gradients well and is widely supported, but removes animations.\nNot converting preserves the format, but gif-animations are replaced by their first frame.'>
+              <option value="webp">webp</option>
+              <option value="jpg">JPG</option>
+              <option value="unchanged">Don't convert</option>
+            </select>
+            <label for="BLICK_epub_imageMaxW">Max width:</label>
+            <input type="text" id="BLICK_epub_imageMaxW" class="BLICK_epub_input" placeholder="Max width" title="Max width in px. 0 to ignore.">
+            <label for="BLICK_epub_imageMaxH">Max height:</label>
+            <input type="text" id="BLICK_epub_imageMaxH" class="BLICK_epub_input" placeholder="Max height" title="Max height in px. 0 to ignore.">
+          </div>
+          <label for="BLICK_epub_includeAuthors">Filter by Author:</label>
+          <input type="text" id="BLICK_epub_includeAuthors" class="BLICK_epub_input" placeholder="Author ID or name" style="">
+          <button data-role="detect" class="BLICK_epub_button" title='Generates a list of Names and IDs of the authors of posts with images'>Detect</button>
+          <label for="BLICK_epub_excludeAuthors">Exclude Authors:</label>
+          <input type="text" id="BLICK_epub_excludeAuthors" class="BLICK_epub_input" placeholder="Authors to exclude">
+          <label for="BLICK_epub_styleSelect">Select Style:</label>
+          <select id="BLICK_epub_styleSelect" class="BLICK_epub_select">
+            <option>Simple, full-width images</option>
+            <option>Simple, floating images with max. width</option>
+          </select>
+          <div id="BLICK_epub_stat">0 Posts, 0 Images</div>
+          <div class="BLICK_epub_buttons">
+            <button data-role="export" class="BLICK_epub_button">Export</button>
+            <button data-role="cancel" class="BLICK_epub_button">Cancel</button>
+            <button data-role="select" class="BLICK_epub_button" title='highlights and checks all posts that will go into the epub file'>Highlight</button>
+          </div>
+        </div>`;
       document.body.appendChild(this.form);
       this.statDispEl = document.getElementById("BLICK_epub_stat");
       this.form.addEventListener("click", (ev) => {
@@ -2302,27 +2304,27 @@
       const sty = document.createElement("style");
       sty.id = 'BLICK_epub_style';
       sty.innerHTML = `
-					#BLICK_epub_form_overlay{position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background-color: rgba(0, 0, 0, 0.5);display: flex;justify-content: center;align-items: center;z-index: 1000;}
-					#BLICK_epub_form {color: #333; display: grid; grid-template-columns: 130px 3fr 1fr; gap: 15px 5px; border-radius: 8px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); padding: 20px; width: 600px; margin: auto; align-items: center; border: 1px solid #b0a394;  background-color: #fffff0;}
-					#BLICK_epub_form h2 {grid-column: span 3; margin: 0; text-align: center; color: #4CAF50;}
-					#BLICK_epub_form .BLICK_epub_input,.BLICK_epub_select {padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; grid-column: span 2;}
-					#BLICK_epub_form .BLICK_epub_buttons {grid-column: span 3; display: flex; justify-content: space-between; margin-top: 10px;}
-					#BLICK_epub_form .BLICK_epub_button {color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; transition: background-color 0.3s; flex: 1; margin: 0 5px;}
-					#BLICK_epub_form .BLICK_epub_button:hover {filter: brightness(120%);}
-					#BLICK_epub_form .BLICK_epub_button[data-role='export']{background-color:#3ba44b}
-					#BLICK_epub_form .BLICK_epub_button[data-role='cancel']{background-color:#bb5546}
-					#BLICK_epub_form .BLICK_epub_button[data-role='select']{background-color:#dd9243}
-					#BLICK_epub_form .BLICK_epub_button[data-role='detect']{background-color:#dd9243;}
-					#BLICK_epub_form #BLICK_epub_includeAuthors {grid-column: span 1;}
-					#BLICK_epub_form label,#BLICK_epub_form input[type='checkbox']  {cursor: pointer;}
-					#BLICK_epub_stat {grid-column: span 3;text-align: center;}
-					.BLICK_epub_selected{background-color: #f005;}
-					#BLICK_epub_imageSetting {display: flex;grid-column: span 2;align-items: center; justify-content: space-between;}
-					#BLICK_epub_imageSetting label{text-align:center;}
-					#BLICK_epub_imageFormat {width: 68px;}
-					#BLICK_epub_imageMaxW, #BLICK_epub_imageMaxH {width: 60px;}
-					#BLICK_epub_checkmarks{grid-column: 2 /span 2;display:flex;justify-content: space-between;}
-					`;
+          #BLICK_epub_form_overlay{position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background-color: rgba(0, 0, 0, 0.5);display: flex;justify-content: center;align-items: center;z-index: 1000;}
+          #BLICK_epub_form {color: #333; display: grid; grid-template-columns: 130px 3fr 1fr; gap: 15px 5px; border-radius: 8px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); padding: 20px; width: 600px; margin: auto; align-items: center; border: 1px solid #b0a394;  background-color: #fffff0;}
+          #BLICK_epub_form h2 {grid-column: span 3; margin: 0; text-align: center; color: #4CAF50;}
+          #BLICK_epub_form .BLICK_epub_input,.BLICK_epub_select {padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; grid-column: span 2;}
+          #BLICK_epub_form .BLICK_epub_buttons {grid-column: span 3; display: flex; justify-content: space-between; margin-top: 10px;}
+          #BLICK_epub_form .BLICK_epub_button {color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; transition: background-color 0.3s; flex: 1; margin: 0 5px;}
+          #BLICK_epub_form .BLICK_epub_button:hover {filter: brightness(120%);}
+          #BLICK_epub_form .BLICK_epub_button[data-role='export']{background-color:#3ba44b}
+          #BLICK_epub_form .BLICK_epub_button[data-role='cancel']{background-color:#bb5546}
+          #BLICK_epub_form .BLICK_epub_button[data-role='select']{background-color:#dd9243}
+          #BLICK_epub_form .BLICK_epub_button[data-role='detect']{background-color:#dd9243;}
+          #BLICK_epub_form #BLICK_epub_includeAuthors {grid-column: span 1;}
+          #BLICK_epub_form label,#BLICK_epub_form input[type='checkbox']  {cursor: pointer;}
+          #BLICK_epub_stat {grid-column: span 3;text-align: center;}
+          .BLICK_epub_selected{background-color: #f005;}
+          #BLICK_epub_imageSetting {display: flex;grid-column: span 2;align-items: center; justify-content: space-between;}
+          #BLICK_epub_imageSetting label{text-align:center;}
+          #BLICK_epub_imageFormat {width: 68px;}
+          #BLICK_epub_imageMaxW, #BLICK_epub_imageMaxH {width: 60px;}
+          #BLICK_epub_checkmarks{grid-column: 2 /span 2;display:flex;justify-content: space-between;}
+          `;
       document.head.appendChild(sty);
     }
     showExportForm(mode = "epub") {
@@ -2582,100 +2584,100 @@
         if (imgName !== "")
           tex += `<img class='thumb' src='images/${imgName}' />`;
         tex += `<div class='postHead'>
-					<span class='post_author'>${author}</span>
-					<span class='post_title'>${title}</span>
-					<span class='post_date'>${date}</span>
-					<span class='post_id'>#${id}</span>
-				</div><div class='postBody'>${msg}</div></div>`;
+          <span class='post_author'>${author}</span>
+          <span class='post_title'>${title}</span>
+          <span class='post_date'>${date}</span>
+          <span class='post_id'>#${id}</span>
+        </div><div class='postBody'>${msg}</div></div>`;
         return tex;
       }).join("");
       //
       const zip = new JSZip();
       zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
       zip.file("META-INF/container.xml", `
-				<?xml version="1.0" encoding="UTF-8"?>
-				<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
-						<rootfiles>
-								<rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
-						</rootfiles>
-				</container>
-			`);
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+            <rootfiles>
+                <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+            </rootfiles>
+        </container>
+      `);
       zip.file("OEBPS/content.opf", `
-				<?xml version="1.0" encoding="UTF-8"?>
-				<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
-						<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-								<dc:title>${this.title}</dc:title>
-								<dc:creator>${this.author}</dc:creator>
-								<dc:language>en</dc:language>
-						</metadata>
-						<manifest>
-								<item id="content" href="content.html" media-type="application/xhtml+xml"/>
-								<item href="style.css" id="css" media-type="text/css" />
-						</manifest>
-						<spine>
-								<itemref idref="content"/>
-						</spine>
-				</package>
-			`);
+        <?xml version="1.0" encoding="UTF-8"?>
+        <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
+            <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+                <dc:title>${this.title}</dc:title>
+                <dc:creator>${this.author}</dc:creator>
+                <dc:language>en</dc:language>
+            </metadata>
+            <manifest>
+                <item id="content" href="content.html" media-type="application/xhtml+xml"/>
+                <item href="style.css" id="css" media-type="text/css" />
+            </manifest>
+            <spine>
+                <itemref idref="content"/>
+            </spine>
+        </package>
+      `);
       switch (this.filter.style) {
         default:
         case 0:
           zip.file("OEBPS/style.css", `
-						div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
-						img.thumb{width:90%;display: block;margin:auto;}
-						span.post_title {color: red;font-weight: bold;}
-						span.post_author {color: green;font-weight: bold;}
-						div.postHead{display:flex;display: flex;justify-content: space-between;margin-bottom:15px;flex-wrap: wrap;}
-						#hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
-						span.unkfunc{color: #789922;}
-					`);
+            div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
+            img.thumb{width:90%;display: block;margin:auto;}
+            span.post_title {color: red;font-weight: bold;}
+            span.post_author {color: green;font-weight: bold;}
+            div.postHead{display:flex;display: flex;justify-content: space-between;margin-bottom:15px;flex-wrap: wrap;}
+            #hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
+            span.unkfunc{color: #789922;}
+          `);
           break;
         case 1:
           zip.file("OEBPS/style.css", `
-					div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
-					img.thumb{display: block;float:left;width:100%;max-width:300px;margin-right:10px;}
-					div.post::after {content: "";display: table;clear: both;}
-					span.post_title {color: red;font-weight: bold;}
-					span.post_author {color: green;font-weight: bold;}
-					div.postHead{display:flex;justify-content: space-between;margin-bottom:15px;min-width:200px;flex-wrap: wrap;}
-					#hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
-					span.unkfunc{color: #789922;}
-				`);
+          div.post{margin-bottom: 25px;border-bottom: 1px dashed #ccc;padding: 10px;}
+          img.thumb{display: block;float:left;width:100%;max-width:300px;margin-right:10px;}
+          div.post::after {content: "";display: table;clear: both;}
+          span.post_title {color: red;font-weight: bold;}
+          span.post_author {color: green;font-weight: bold;}
+          div.postHead{display:flex;justify-content: space-between;margin-bottom:15px;min-width:200px;flex-wrap: wrap;}
+          #hover-content {background-color: #f9f9f9;padding: 10px;border: 1px solid #ccc;box-shadow: 0px 0px 10px rgba(0,0,0,0.1);z-index: 1000;display: none;}
+          span.unkfunc{color: #789922;}
+        `);
           break;
       }
       zip.file("OEBPS/content.html", `
-				<?xml version="1.0" encoding="UTF-8"?>
-				<!DOCTYPE html>
-				<html xmlns="http://www.w3.org/1999/xhtml">
-						<head>
-							<title>${this.title}</title>
-							<link href="style.css" rel="stylesheet" type="text/css" />
-							<script>
-								function hoverPrevEnter(e){
-									const hoverContent = document.getElementById('hover-content');
-									hoverContent.style.left = e.pageX + 15 + 'px'; // 15px Offset from the cursor
-									hoverContent.style.top = e.pageY + 15 + 'px';									const targetId = e.target.dataset.refid;
-									const targetElement = document.getElementById(targetId);
-									if (targetElement) {
-											hoverContent.innerHTML = targetElement.innerHTML;
-											hoverContent.style.display = 'block';
-									}
-								};
-								function hoverPrevLeave(e){
-									const hoverContent = document.getElementById('hover-content');
-									hoverContent.style.display = 'none';
-									hoverContent.innerHTML = '';
-								}
-							</script>
-						</head>						
-						<body>
-							<header>${this.title}</header>
-							<div id='questauthor'>By ${this.author}</div>
-							${cont}
-						<div id="hover-content" style="position: absolute; display: none;"></div>
-						</body>
-				</html>
-			`);
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE html>
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+              <title>${this.title}</title>
+              <link href="style.css" rel="stylesheet" type="text/css" />
+              <script>
+                function hoverPrevEnter(e){
+                  const hoverContent = document.getElementById('hover-content');
+                  hoverContent.style.left = e.pageX + 15 + 'px'; // 15px Offset from the cursor
+                  hoverContent.style.top = e.pageY + 15 + 'px';									const targetId = e.target.dataset.refid;
+                  const targetElement = document.getElementById(targetId);
+                  if (targetElement) {
+                      hoverContent.innerHTML = targetElement.innerHTML;
+                      hoverContent.style.display = 'block';
+                  }
+                };
+                function hoverPrevLeave(e){
+                  const hoverContent = document.getElementById('hover-content');
+                  hoverContent.style.display = 'none';
+                  hoverContent.innerHTML = '';
+                }
+              </script>
+            </head>						
+            <body>
+              <header>${this.title}</header>
+              <div id='questauthor'>By ${this.author}</div>
+              ${cont}
+            <div id="hover-content" style="position: absolute; display: none;"></div>
+            </body>
+        </html>
+      `);
       this.fetchImages([...imgs]).then((imageBlob) => {
         let imgCnt = 0;
         imageBlob.forEach(blob => {
@@ -2762,8 +2764,8 @@
         const ffam = this.setting.fontTypeList[this.setting.data.fonttype];
         const fsize = this.setting.data.fontsize + "pt";
         const templ = `#delform .bbcode_quote{line-height:1.5em;font-family:${ffam};font-size:${fsize};}
-					#delform h2.title {font-family:${ffam};font-weight:bold;font-size: ${fsize};}
-					#delform {line-height:1.5em;font-family:${ffam};font-size:${fsize};margin-right: 7%;margin-top: 15px;margin-bottom: 25px;text-align: left;letter-spacing: 1px;color: #003;}`;
+          #delform h2.title {font-family:${ffam};font-weight:bold;font-size: ${fsize};}
+          #delform {line-height:1.5em;font-family:${ffam};font-size:${fsize};margin-right: 7%;margin-top: 15px;margin-bottom: 25px;text-align: left;letter-spacing: 1px;color: #003;}`;
         this.styles.fontsize = templ;
       }
       if (update)
@@ -2778,17 +2780,17 @@
         const inv = !this.setting.data.invertCol;
         //
         const templ = `#delform>br,#delform>hr {display:none;}
-					#delform${pg ? ">div" : ""}{box-shadow:0px 0px 5px 3px #${inv ? "000" : "fff"},5px 5px 15px 5px #${!inv ? "000" : "fff"},inset 0px 0px 5px #${!inv ? "000" : "fff"};margin-bottom:30px;	border-radius:5px;	border: 2px groove #000;}
-					#delform{width: 100%;}
-					.thumb{box-shadow:0px 0px 15px ${inv ? "#fff" : "#000"};	border-radius:10px;}
-					.reply{width: 100%;}
-					.userdelete{clear:both;}
-					#delform>div{padding: 10px;}
-					#delform > div::after {content: "";display: inline-block;clear: both;}
-					#delform > div > div[id] {clear: both;}
-					#delform>span {	margin-top:10px;}
-					#delform img.inlineimg {vertical-align: middle!important;	margin: 0 4px;}
-			`; //width: 98%;display:table;
+          #delform${pg ? ">div" : ""}{box-shadow:0px 0px 5px 3px #${inv ? "000" : "fff"},5px 5px 15px 5px #${!inv ? "000" : "fff"},inset 0px 0px 5px #${!inv ? "000" : "fff"};margin-bottom:30px;	border-radius:5px;	border: 2px groove #000;}
+          #delform{width: 100%;}
+          .thumb{box-shadow:0px 0px 15px ${inv ? "#fff" : "#000"};	border-radius:10px;}
+          .reply{width: 100%;}
+          .userdelete{clear:both;}
+          #delform>div{padding: 10px;}
+          #delform > div::after {content: "";display: inline-block;clear: both;}
+          #delform > div > div[id] {clear: both;}
+          #delform>span {	margin-top:10px;}
+          #delform img.inlineimg {vertical-align: middle!important;	margin: 0 4px;}
+      `; //width: 98%;display:table;
         this.styles.paragraphMargin = templ;
       }
       if (update)
@@ -2801,15 +2803,15 @@
       else {
         const pg = window.location.href.search(/\/[\d\+]+\.html/) == -1;
         const templ = `html, body{background-color:#002!important;}
-					#delform a {color: #BB5555;font-size: 14px;font-style: italic;text-decoration: underline;}
-					#delform, #delform .reply, #delform blockquote{background-color:#001;color: #FFD;}
-					#delform span.spoiler{text-shadow:none;}
-					#delform .highlight{background-color:#003;}
-					${this.setting.data.paragraphMargin ? ".thumb{	box-shadow:0px 0px 15px #fff;	border-radius:10px;}" : ""}
-					"#delform h2.title{color:#fdd}
-					${this.setting.data.paragraphMargin ? ".thumb{	box-shadow:0px 0px 15px #fff;	border-radius:10px;}" : ""}
-					${this.setting.data.paragraphMargin ? ((pg ? "#delform>div{" : "#delform>div{") + "box-shadow:0px 0px 5px 3px #fff,5px 5px 15px 5px #000000,inset 0px 0px 5px #000;}") : ""}
-					#delform {color:#ffd}`;
+          #delform a {color: #BB5555;font-size: 14px;font-style: italic;text-decoration: underline;}
+          #delform, #delform .reply, #delform blockquote{background-color:#001;color: #FFD;}
+          #delform span.spoiler{text-shadow:none;}
+          #delform .highlight{background-color:#003;}
+          ${this.setting.data.paragraphMargin ? ".thumb{	box-shadow:0px 0px 15px #fff;	border-radius:10px;}" : ""}
+          "#delform h2.title{color:#fdd}
+          ${this.setting.data.paragraphMargin ? ".thumb{	box-shadow:0px 0px 15px #fff;	border-radius:10px;}" : ""}
+          ${this.setting.data.paragraphMargin ? ((pg ? "#delform>div{" : "#delform>div{") + "box-shadow:0px 0px 5px 3px #fff,5px 5px 15px 5px #000000,inset 0px 0px 5px #000;}") : ""}
+          #delform {color:#ffd}`;
         this.styles.invertCol = templ;
       }
       if (update)
@@ -2824,14 +2826,14 @@
       }
       else {
         this.styles.replyForm = `
-				#BLICK_previewbut{margin-right:0px!important;}/*workaround questreader*/
-				.postform tr:nth-child(3) td:last-child { display: grid; grid-template-columns: 1fr 30px auto!important; }/*workaround questreader*/
-				.postarea table tr td:nth-of-type(2) {display: flex;gap: 5px;align-items: center;}
-				.postarea table tr td a.rules{width:auto!important;}
-				.postarea table tr td input[type="text"] {flex: 1;}
-				.postarea table tr td textarea{width: 100%;  box-sizing: border-box;}
-				input[name="postpassword"]{flex:0.5!important;}
-				`;
+        #BLICK_previewbut{margin-right:0px!important;}/*workaround questreader*/
+        td.postblock + td { display: grid; grid-template-columns: 1fr 30px auto!important; }/*workaround questreader*/
+        .postarea table tr td:nth-of-type(2) {display: flex;gap: 5px;align-items: center;}
+        .postarea table tr td a.rules{width:auto!important;}
+        .postarea table tr td input[type="text"] {flex: 1;}
+        .postarea table tr td textarea{width: 100%;  box-sizing: border-box;}
+        input[name="postpassword"]{flex:0.5!important;}
+        `;
         document.querySelectorAll(".postarea table tr td:nth-of-type(2)").forEach(el => {
           const prevEl = el.querySelector("input[type='text']") ?? null;
           if (prevEl === null)
