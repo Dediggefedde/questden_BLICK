@@ -37,8 +37,8 @@ You will need to use a userscript manager to run scripts.\
 I recommend [Tampermonkey](https://www.tampermonkey.net/).\
 If you use Google Chrome, you will also need to [enable the extension developer mode](https://www.tampermonkey.net/faq.php?locale=en#Q209).
 
-Here is an install link: https://greasyfork.org/en/scripts/522343-questden-blick2
-Otherwise, you can view the file ["questden_blick2.user.js"](https://github.com/Dediggefedde/questden_BLICK/raw/refs/heads/main/questden_blick2.user.js?raw=true) from the list above.
+**Press here to install the script**: https://greasyfork.org/en/scripts/522343-questden-blick2<br>
+Alternatively, you can install the file ["questden_blick2.user.js"](https://github.com/Dediggefedde/questden_BLICK/raw/refs/heads/main/questden_blick2.user.js?raw=true) from the list above.
 
 Confirm the prompt from Tampermonkey that you want to install the script and reload questden.org. Then the script is ready to run and will show a small blue button on the right.
 
